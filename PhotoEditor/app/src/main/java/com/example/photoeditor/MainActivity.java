@@ -5,7 +5,9 @@
 //import android.Manifest;
 //import android.annotation.SuppressLint;
 //import android.app.ActivityManager;
+//import android.app.AlertDialog;
 //import android.app.ProgressDialog;
+//import android.content.DialogInterface;
 //import android.content.Intent;
 //import android.content.SharedPreferences;
 //import android.content.pm.PackageManager;
@@ -22,8 +24,11 @@
 //import android.widget.ImageView;
 //import android.widget.Toast;
 //
+//import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+//
 //import java.io.File;
 //import java.io.FileNotFoundException;
+//import java.io.FileOutputStream;
 //import java.io.IOError;
 //import java.io.IOException;
 //import java.io.InputStream;
@@ -122,6 +127,38 @@
 //                } else {
 //                    Toast.makeText(MainActivity.this, "Камера не существует", Toast.LENGTH_SHORT).show();
 //                }
+//            }
+//        });
+//        final Button saveImageButton = findViewById(R.id.saveImage);
+//        saveImageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//                final DialogInterface.OnClickListener dialogOnClickListener = new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        if (which == DialogInterface.BUTTON_POSITIVE) {
+//                            final File outFile = createImageFile();
+//                            try (FileOutputStream out = new FileOutputStream(outFile)) {
+//                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+//                                imageUri = Uri.parse("file://" + outFile.getAbsolutePath());
+//                                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, imageUri));
+//                                Toast.makeText(MainActivity.this, "Сохранено", Toast.LENGTH_SHORT).show();
+//                            }catch (IOException e){
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                };
+//                builder.setMessage("Сохранить фото в галерею?").setPositiveButton("Да", dialogOnClickListener).setNegativeButton("Нет", dialogOnClickListener).show();
+//            }
+//        });
+//        final Button backButton = findViewById(R.id.backButton);
+//        backButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v){
+//                findViewById(R.id.editScreen).setVisibility(View.GONE);
+//                findViewById(R.id.welcomeScreen).setVisibility(View.VISIBLE);
 //            }
 //        });
 //    }
@@ -228,5 +265,6 @@
 //            }
 //        }.start();
 //    }
+//
 //
 //}

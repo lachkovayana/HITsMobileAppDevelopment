@@ -2,7 +2,11 @@ package com.example.photoeditor
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.ActivityNotFoundException
+import android.content.ContentValues
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -19,12 +23,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_PERMISSONS && grantResults.size > 0) {
+        if (requestCode == REQUEST_PERMISSONS && grantResults.isNotEmpty()) {
             if (notPermissions()) {
                 val toast = Toast.makeText(
                     this,
@@ -64,21 +66,23 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 )
                 toast.show()
-                //                ((ActivityManager) this.getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData();
+//                ((ActivityManager) this.getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData();
 //                recreate();
             }
         }
     }
 
     private var imageView: ImageView? = null
+
     private fun init() {
+        val takePhotoButton = findViewById<Button>(R.id.takePhotoButton)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val builder = VmPolicy.Builder()
             StrictMode.setVmPolicy(builder.build())
         }
         imageView = findViewById(R.id.imageView)
         if (!this@MainActivity.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            findViewById<View>(R.id.takePhotoButton).visibility = View.GONE
+            takePhotoButton.visibility = View.GONE
         }
         val selectImageById = findViewById<Button>(R.id.selectImageButton)
         selectImageById.setOnClickListener {
@@ -89,10 +93,9 @@ class MainActivity : AppCompatActivity() {
             val chooserIntent = Intent.createChooser(intent, "Select Image")
             startActivityForResult(chooserIntent, REQUEST_PICK_IMAGE)
         }
-        val takePhotoButton = findViewById<Button>(R.id.takePhotoButton)
         takePhotoButton.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (takePictureIntent.resolveActivity(packageManager) != null) {
+            try {
                 //create a file for the photo that was just taken
                 val photoFile = createImageFile()
                 imageUri = Uri.fromFile(photoFile)
@@ -103,9 +106,47 @@ class MainActivity : AppCompatActivity() {
                     takePictureIntent,
                     REQUEST_IMAGE_CAPTURE
                 )
-            } else {
-                Toast.makeText(this@MainActivity, "Камера не существует", Toast.LENGTH_SHORT).show()
+            } catch (ex: ActivityNotFoundException) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "На Вашем устройстве нет камеры",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+        }
+        val saveImageButton = findViewById<Button>(R.id.saveImage)
+        saveImageButton.setOnClickListener {
+            val builder = AlertDialog.Builder(this@MainActivity)
+            val dialogOnClickListener =
+                DialogInterface.OnClickListener { dialog, which ->
+                    if (which == DialogInterface.BUTTON_POSITIVE) {
+                        val outFile = createImageFile()
+                        try {
+                            FileOutputStream(outFile).use { out ->
+                                bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                                imageUri =
+                                    Uri.parse("file://" + outFile.absolutePath)
+                                sendBroadcast(
+                                    Intent(
+                                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                        imageUri
+                                    )
+                                )
+                                Toast.makeText(this@MainActivity, "Сохранено", Toast.LENGTH_SHORT).show()
+                            }
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+            builder.setMessage("Сохранить фото в галерею?")
+                .setPositiveButton("Да", dialogOnClickListener)
+                .setNegativeButton("Нет", dialogOnClickListener).show()
+        }
+        val backButton = findViewById<Button>(R.id.backButton)
+        backButton.setOnClickListener {
+            findViewById<View>(R.id.editScreen).visibility = View.GONE
+            findViewById<View>(R.id.welcomeScreen).visibility = View.VISIBLE
         }
     }
 
@@ -133,7 +174,7 @@ class MainActivity : AppCompatActivity() {
             if (imageUri == null) {
                 val p = getSharedPreferences(appID, 0)
                 val path = p.getString("path", "")
-                if (path!!.length < 1) {
+                if (path!!.isEmpty()) {
                     recreate()
                     return
                 }
