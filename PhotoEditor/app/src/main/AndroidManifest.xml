@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.photoeditor">
-    <!-- my addition-->
+    <!-- my addition -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.camera2"
         android:required="false" />
-    <!--    ****    -->
-
-    <!--in application add largeHeap-->
-    <!--in activity add screenOrientation-->
 
     <application
         android:allowBackup="true"

@@ -53,17 +53,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_PERMISSONS && grantResults.isNotEmpty()) {
             if (notPermissions()) {
                 val toast = Toast.makeText(
-                    this,
-                    "Редактор не может работать без доступа к Вашим фото. Пожалуйста, выберите 'Разрешить'",
-                    Toast.LENGTH_LONG
+                        this,
+                        "Редактор не может работать без доступа к Вашим фото. Пожалуйста, выберите 'Разрешить'",
+                        Toast.LENGTH_LONG
                 )
                 toast.show()
 //                ((ActivityManager) this.getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData();
@@ -103,14 +103,14 @@ class MainActivity : AppCompatActivity() {
                 myPrefs.edit().putString("path", photoFile.absolutePath).apply()
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
                 startActivityForResult(
-                    takePictureIntent,
-                    REQUEST_IMAGE_CAPTURE
+                        takePictureIntent,
+                        REQUEST_IMAGE_CAPTURE
                 )
             } catch (ex: ActivityNotFoundException) {
                 Toast.makeText(
-                    this@MainActivity,
-                    "На Вашем устройстве нет камеры",
-                    Toast.LENGTH_SHORT
+                        this@MainActivity,
+                        "На Вашем устройстве нет камеры",
+                        Toast.LENGTH_SHORT
                 ).show()
             }
         }
@@ -118,30 +118,30 @@ class MainActivity : AppCompatActivity() {
         saveImageButton.setOnClickListener {
             val builder = AlertDialog.Builder(this@MainActivity)
             val dialogOnClickListener =
-                DialogInterface.OnClickListener { dialog, which ->
-                    if (which == DialogInterface.BUTTON_POSITIVE) {
-                        val outFile = createImageFile()
-                        try {
-                            FileOutputStream(outFile).use { out ->
-                                bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, out)
-                                imageUri =
-                                    Uri.parse("file://" + outFile.absolutePath)
-                                sendBroadcast(
-                                    Intent(
-                                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                                        imageUri
+                    DialogInterface.OnClickListener { dialog, which ->
+                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                            val outFile = createImageFile()
+                            try {
+                                FileOutputStream(outFile).use { out ->
+                                    bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                                    imageUri =
+                                            Uri.parse("file://" + outFile.absolutePath)
+                                    sendBroadcast(
+                                            Intent(
+                                                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                                    imageUri
+                                            )
                                     )
-                                )
-                                Toast.makeText(this@MainActivity, "Сохранено", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this@MainActivity, "Сохранено", Toast.LENGTH_SHORT).show()
+                                }
+                            } catch (e: IOException) {
+                                e.printStackTrace()
                             }
-                        } catch (e: IOException) {
-                            e.printStackTrace()
                         }
                     }
-                }
             builder.setMessage("Сохранить фото в галерею?")
-                .setPositiveButton("Да", dialogOnClickListener)
-                .setNegativeButton("Нет", dialogOnClickListener).show()
+                    .setPositiveButton("Да", dialogOnClickListener)
+                    .setNegativeButton("Нет", dialogOnClickListener).show()
         }
         val backButton = findViewById<Button>(R.id.backButton)
         backButton.setOnClickListener {
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity() {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = "/JPEG_$timeStamp.jpg"
         val storageDir =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         return File(storageDir.toString() + imageFileName)
     }
 
@@ -188,8 +188,8 @@ class MainActivity : AppCompatActivity() {
             imageUri = data.data
         }
         val dialog = ProgressDialog.show(
-            this@MainActivity, "Loading",
-            "Please, wait", true
+                this@MainActivity, "Loading",
+                "Please, wait", true
         )
         editMode = true
         findViewById<View>(R.id.welcomeScreen).visibility = View.GONE
@@ -245,8 +245,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_PERMISSONS = 1234
         private val PERMISSIONS = arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
         private const val PERMISSIONS_COUNT = 2
         private const val REQUEST_PICK_IMAGE = 12345

@@ -34,6 +34,7 @@
 //import java.io.InputStream;
 //import java.text.SimpleDateFormat;
 //import java.util.Date;
+//import java.util.Locale;
 //
 //public class MainActivity extends AppCompatActivity {
 //    @Override
@@ -168,7 +169,7 @@
 //    private Uri imageUri;
 //
 //    private File createImageFile() {
-//        final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
 //        final String imageFileName = "/JPEG_" + timeStamp + ".jpg";
 //        final File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 //        return new File(storageDir + imageFileName);
