@@ -62,12 +62,11 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_PERMISSONS && grantResults.isNotEmpty()) {
             if (notPermissions()) {
-                val toast = Toast.makeText(
+                Toast.makeText(
                     this,
                     "Редактор не может работать без доступа к Вашим фото. Пожалуйста, выберите 'Разрешить'",
                     Toast.LENGTH_LONG
-                )
-                toast.show()
+                ).show()
 //                ((ActivityManager) this.getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData();
 //                recreate();
             }
@@ -169,11 +168,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     //    private var editMode = false
-    private var bitmap: Bitmap? = null
-    private var width = 0
-    private var height = 0
-    private lateinit var pixels: IntArray
-    private var pixelCount = 0
+//    private var bitmap: Bitmap? = null
+//    private var width = 0
+//    private var height = 0
+//    private lateinit var pixels: IntArray
+//    private var pixelCount = 0
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != RESULT_OK) {
@@ -188,6 +187,7 @@ class MainActivity : AppCompatActivity() {
                     return
                 }
                 imageUri = Uri.parse("file://$path")
+
             }
             sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, imageUri))
         } else if (data == null) {
@@ -196,64 +196,64 @@ class MainActivity : AppCompatActivity() {
         } else if (requestCode == REQUEST_PICK_IMAGE) {
             imageUri = data.data
         }
-        val dialog = ProgressDialog.show(
-            this@MainActivity, "Loading",
-            "Please, wait", true
-        )
+        val editIntent = Intent(this@MainActivity, ChooseActivity::class.java)
+        val imageToTransfer = imageUri
+        editIntent.putExtra("imgUri", imageToTransfer.toString())
+        startActivity(editIntent)
+
+//        val dialog = ProgressDialog.show(
+//            this@MainActivity, "Loading",
+//            "Please, wait", true
+//        )
 //        editMode = true
 //        findViewById<View>(R.id.welcomeScreen).visibility = View.GONE
 //        findViewById<View>(R.id.editScreen).visibility = View.VISIBLE
-        object : Thread() {
-            override fun run() {
-                bitmap = null
-                val bmpOptions = BitmapFactory.Options()
-                bmpOptions.inBitmap = bitmap
-                bmpOptions.inJustDecodeBounds = true
-                try {
-                    contentResolver.openInputStream(imageUri!!).use { input ->
-                        bitmap = BitmapFactory.decodeStream(input, null, bmpOptions)
-                    }
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-                bmpOptions.inJustDecodeBounds = false
-                width = bmpOptions.outWidth
-                height = bmpOptions.outHeight
-                var resizeScale = 1
-                if (width > MAX_PIXEL_COUNT) {
-                    resizeScale = width / MAX_PIXEL_COUNT
-                } else if (height > MAX_PIXEL_COUNT) {
-                    resizeScale = height / MAX_PIXEL_COUNT
-                }
-                if (width / resizeScale > MAX_PIXEL_COUNT || height / resizeScale > MAX_PIXEL_COUNT) {
-                    resizeScale++
-                }
-                bmpOptions.inSampleSize = resizeScale
-                var input: InputStream? = null
-                try {
-                    input = contentResolver.openInputStream(imageUri!!)
-                } catch (e: FileNotFoundException) {
-                    e.printStackTrace()
-                    recreate()
-                }
-                bitmap = BitmapFactory.decodeStream(input, null, bmpOptions)
-                runOnUiThread {
-                    imageView!!.setImageBitmap(bitmap)
-                    dialog.cancel()
-                }
-                width = bitmap!!.width
-                height = bitmap!!.height
-                bitmap = bitmap!!.copy(Bitmap.Config.ARGB_8888, true)
-                pixelCount = width * height
-                pixels = IntArray(pixelCount)
-                bitmap?.getPixels(pixels, 0, width, 0, 0, width, height)
-            }
-        }.start()
-        val editIntent = Intent(this@MainActivity, ChooseActivity::class.java)
-        val imageToTransfer = imageUri
-
-        editIntent.putExtra("imgUri", imageToTransfer.toString())
-        startActivity(editIntent)
+//        object : Thread() {
+//            override fun run() {
+//                bitmap = null
+//                val bmpOptions = BitmapFactory.Options()
+//                bmpOptions.inBitmap = bitmap
+//                bmpOptions.inJustDecodeBounds = true
+//                try {
+//                    contentResolver.openInputStream(imageUri!!).use { input ->
+//                        bitmap = BitmapFactory.decodeStream(input, null, bmpOptions)
+//                    }
+//                } catch (e: IOException) {
+//                    e.printStackTrace()
+//                }
+//                bmpOptions.inJustDecodeBounds = false
+//                width = bmpOptions.outWidth
+//                height = bmpOptions.outHeight
+//                var resizeScale = 1
+//                if (width > MAX_PIXEL_COUNT) {
+//                    resizeScale = width / MAX_PIXEL_COUNT
+//                } else if (height > MAX_PIXEL_COUNT) {
+//                    resizeScale = height / MAX_PIXEL_COUNT
+//                }
+//                if (width / resizeScale > MAX_PIXEL_COUNT || height / resizeScale > MAX_PIXEL_COUNT) {
+//                    resizeScale++
+//                }
+//                bmpOptions.inSampleSize = resizeScale
+//                var input: InputStream? = null
+//                try {
+//                    input = contentResolver.openInputStream(imageUri!!)
+//                } catch (e: FileNotFoundException) {
+//                    e.printStackTrace()
+//                    recreate()
+//                }
+//                bitmap = BitmapFactory.decodeStream(input, null, bmpOptions)
+//                runOnUiThread {
+//                    imageView!!.setImageBitmap(bitmap)
+//                    dialog.cancel()
+//                }
+//                width = bitmap!!.width
+//                height = bitmap!!.height
+//                bitmap = bitmap!!.copy(Bitmap.Config.ARGB_8888, true)
+//                pixelCount = width * height
+//                pixels = IntArray(pixelCount)
+//                bitmap?.getPixels(pixels, 0, width, 0, 0, width, height)
+//            }
+//        }.start()
     }
 
     companion object {
@@ -266,6 +266,6 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_PICK_IMAGE = 12345
         private const val REQUEST_IMAGE_CAPTURE = 1012
         private const val appID = "photoEditor"
-        private const val MAX_PIXEL_COUNT = 2048
+//        private const val MAX_PIXEL_COUNT = 2048
     }
 }
