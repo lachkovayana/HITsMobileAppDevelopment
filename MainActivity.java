@@ -211,11 +211,11 @@
 //        final ProgressDialog dialog = ProgressDialog.show(MainActivity.this, "Loading",
 //                "Please, wait", true);
 //
-//        editMode = true;
-//
-//        findViewById(R.id.welcomeScreen).setVisibility(View.GONE);
-//        findViewById(R.id.editScreen).setVisibility(View.VISIBLE);
-//
+////        editMode = true;
+////
+////        findViewById(R.id.welcomeScreen).setVisibility(View.GONE);
+////        findViewById(R.id.editScreen).setVisibility(View.VISIBLE);
+////
 //        new Thread() {
 //            public void run() {
 //                bitmap = null;
