@@ -1,13 +1,13 @@
 package com.example.photoeditor
-//
-import android.app.ProgressDialog
+
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.*
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,43 +17,33 @@ import java.util.*
 
 
 class FiltersActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filters)
         init()
     }
 
-    //    private var imageUri: Uri? = null
     private fun init() {
-        var imageUri: Uri? = null
-        var imageView: ImageView? = null
-        imageView = findViewById(R.id.imageViewEdit)
+        val imageView = findViewById<ImageView>(R.id.imageViewEdit)
         val uriStr = intent.getStringExtra("imgUri")
         val uri = Uri.parse(uriStr)
+
         imageView?.setImageURI(uri)
 
-        val saveImageButton = findViewById<Button>(R.id.saveButton)
-        saveImageButton.setOnClickListener {
-            val builder = android.app.AlertDialog.Builder(this@FiltersActivity)
-            val dialogOnClickListener =
-                DialogInterface.OnClickListener { dialog, which ->
-                    if (which == DialogInterface.BUTTON_POSITIVE) {
-                        val outFile = createImageFile()
-                        try {
-                            FileOutputStream(outFile).use { out ->
-                                bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, out)
-                                imageUri = Uri.parse("file://" + outFile.absolutePath)
-                                sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, imageUri))
-                                Toast.makeText(this@FiltersActivity, "Сохранено", Toast.LENGTH_SHORT).show()
-                            }
-                        } catch (e: IOException) {
-                            e.printStackTrace()
-                        }
-                    }
-                }
-            builder.setMessage("Сохранить фото в галерею?")
-                .setPositiveButton("Да", dialogOnClickListener)
-                .setNegativeButton("Нет", dialogOnClickListener).show()
+        val drawable = imageView?.drawable as BitmapDrawable
+        val bitmap = drawable.bitmap
+        var finalBitmap = bitmap
+
+        //imageView?.setImageBitmap(bitmap)
+
+        val returnBackButton = findViewById<ImageButton>(R.id.returnBackButton)
+        returnBackButton.setOnClickListener {
+            imageView.setImageBitmap(bitmap)
+        }
+        val returnButton = findViewById<ImageButton>(R.id.returnButton)
+        returnButton.setOnClickListener {
+            imageView.setImageBitmap(finalBitmap)
         }
 
         val backButton = findViewById<Button>(R.id.backButton)
@@ -62,19 +52,73 @@ class FiltersActivity : AppCompatActivity() {
             editIntent.putExtra("imgUri", uri.toString())
             startActivity(editIntent)
         }
+
+        val firstFilter = findViewById<Button>(R.id.swap)
+        firstFilter.setOnClickListener {
+            val width = bitmap.width
+            val height = bitmap.height
+            val srcPixels = IntArray(width * height)
+            val destPixels = IntArray(width * height)
+            bitmap.getPixels(srcPixels, 0, width, 0, 0, width, height)
+            val bmDublicated = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            swapRB(srcPixels, destPixels)
+            bmDublicated.setPixels(destPixels, 0, width, 0, 0, width, height)
+            imageView.setImageBitmap(bmDublicated)
+            finalBitmap = bmDublicated
+            //findViewById<Button>(R.id.saveImage).isEnabled = true
+        }
+
+        val secondFilter = findViewById<Button>(R.id.F2)
+        secondFilter.setOnClickListener {
+            val width = bitmap.width
+            val height = bitmap.height
+            val srcPixels = IntArray(width * height)
+            val destPixels = IntArray(width * height)
+            bitmap.getPixels(srcPixels, 0, width, 0, 0, width, height)
+            val bmDublicated = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            grey(srcPixels, destPixels)
+            bmDublicated.setPixels(destPixels, 0, width, 0, 0, width, height);
+            imageView.setImageBitmap(bmDublicated)
+            finalBitmap = bmDublicated
+        }
+        val applyButton = findViewById<Button>(R.id.applyButton)
+        applyButton.setOnClickListener {
+
+        }
+    }
+
+    private fun grey(src: IntArray, dest: IntArray){
+        for (i in src.indices) {
+            // получаем компоненты цветов пикселя
+            var r = (src[i] and 0x00FF0000 shr 16)
+            var g = (src[i] and 0x0000FF00 shr 8)
+            var b = (src[i] and 0x000000FF)
+            // делаем цвет черно-белым (оттенки серого) - находим среднее арифметическое
+            r = (((r + g + b) / 3.0f).toInt()).also { b = it }.also { g = it }
+            // собираем новый пиксель по частям (по каналам)
+            dest[i] = -0x1000000 or (r shl 16) or (g  shl 8) or b
+        }
+    }
+
+    private fun swapRB(src: IntArray, dest: IntArray) {
+        for (i in src.indices) {
+            (src[i] and -0xff0100 or (src[i] and 0x000000ff shl 16)
+                    or (src[i] and 0x00ff0000 shr 16)).also { dest[i] = it }
+        }
     }
 
 
-    private fun createImageFile(): File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "/JPEG_$timeStamp.jpg"
-        val storageDir =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        return File(storageDir.toString() + imageFileName)
-    }
+}
 
-    private var bitmap: Bitmap? = null
-//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode == RESULT_OK) {
+//            val imageUri = data?.data
+//            bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+//            finalBitmap = bitmap
+//        }
+//    }
+
 //    private var width = 0
 //    private var height = 0
 //    private lateinit var pixels: IntArray
@@ -100,6 +144,7 @@ class FiltersActivity : AppCompatActivity() {
 //                try {
 //                    contentResolver.openInputStream(imageUri!!).use { input ->
 //                        bitmap = BitmapFactory.decodeStream(input, null, bmpOptions)
+//finalBitmap = bitmap
 //                    }
 //                } catch (e: IOException) {
 //                    e.printStackTrace()
@@ -138,4 +183,4 @@ class FiltersActivity : AppCompatActivity() {
 //            }
 //        }.start()
 //    }
-}
+//}

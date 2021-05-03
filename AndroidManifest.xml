@@ -17,8 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PhotoEditor">
-        <activity android:name=".FiltersActivity"></activity>
-        <activity android:name=".ChooseActivity"></activity>
+        <activity android:name=".FiltersActivity" />
+        <activity android:name=".ChooseActivity" />
 
         <activity
             android:name=".MainActivity"

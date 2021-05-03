@@ -2,15 +2,9 @@ package com.example.photoeditor
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
-import android.content.ContentValues
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -49,9 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && notPermissions()) {
-            requestPermissions(PERMISSIONS, REQUEST_PERMISSONS)
-        }
+        requestPermissions(PERMISSIONS, REQUEST_PERMISSONS)
     }
 
     override fun onRequestPermissionsResult(
@@ -115,47 +107,7 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         }
-//        val saveImageButton = findViewById<Button>(R.id.saveImage)
-//        saveImageButton.setOnClickListener {
-//            val builder = AlertDialog.Builder(this@MainActivity)
-//            val dialogOnClickListener =
-//                    DialogInterface.OnClickListener { dialog, which ->
-//                        if (which == DialogInterface.BUTTON_POSITIVE) {
-//                            val outFile = createImageFile()
-//                            try {
-//                                FileOutputStream(outFile).use { out ->
-//                                    bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, out)
-//                                    imageUri =
-//                                            Uri.parse("file://" + outFile.absolutePath)
-//                                    sendBroadcast(
-//                                            Intent(
-//                                                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-//                                                    imageUri
-//                                            )
-//                                    )
-//                                    Toast.makeText(this@MainActivity, "Сохранено", Toast.LENGTH_SHORT).show()
-//                                }
-//                            } catch (e: IOException) {
-//                                e.printStackTrace()
-//                            }
-//                        }
-//                    }
-//            builder.setMessage("Сохранить фото в галерею?")
-//                    .setPositiveButton("Да", dialogOnClickListener)
-//                    .setNegativeButton("Нет", dialogOnClickListener).show()
-//        }
-//        val backButton = findViewById<Button>(R.id.backButton)
-//        backButton.setOnClickListener {
-//            findViewById<View>(R.id.editScreen).visibility = View.GONE
-//            findViewById<View>(R.id.welcomeScreen).visibility = View.VISIBLE
-//        }
-//        val filtersButton = findViewById<Button>(R.id.filtersButton)
-//        filtersButton.setOnClickListener {
-//            val editIntent = Intent(this, FiltersActivity::class.java)
-//            val imageToTransfer = imageUri
-//            editIntent.putExtra("imgUri", imageToTransfer.toString())
-//            startActivity(editIntent)
-//        }
+
     }
 
     private var imageUri: Uri? = null
@@ -167,12 +119,7 @@ class MainActivity : AppCompatActivity() {
         return File(storageDir.toString() + imageFileName)
     }
 
-    //    private var editMode = false
-//    private var bitmap: Bitmap? = null
-//    private var width = 0
-//    private var height = 0
-//    private lateinit var pixels: IntArray
-//    private var pixelCount = 0
+
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != RESULT_OK) {
@@ -200,60 +147,6 @@ class MainActivity : AppCompatActivity() {
         val imageToTransfer = imageUri
         editIntent.putExtra("imgUri", imageToTransfer.toString())
         startActivity(editIntent)
-
-//        val dialog = ProgressDialog.show(
-//            this@MainActivity, "Loading",
-//            "Please, wait", true
-//        )
-//        editMode = true
-//        findViewById<View>(R.id.welcomeScreen).visibility = View.GONE
-//        findViewById<View>(R.id.editScreen).visibility = View.VISIBLE
-//        object : Thread() {
-//            override fun run() {
-//                bitmap = null
-//                val bmpOptions = BitmapFactory.Options()
-//                bmpOptions.inBitmap = bitmap
-//                bmpOptions.inJustDecodeBounds = true
-//                try {
-//                    contentResolver.openInputStream(imageUri!!).use { input ->
-//                        bitmap = BitmapFactory.decodeStream(input, null, bmpOptions)
-//                    }
-//                } catch (e: IOException) {
-//                    e.printStackTrace()
-//                }
-//                bmpOptions.inJustDecodeBounds = false
-//                width = bmpOptions.outWidth
-//                height = bmpOptions.outHeight
-//                var resizeScale = 1
-//                if (width > MAX_PIXEL_COUNT) {
-//                    resizeScale = width / MAX_PIXEL_COUNT
-//                } else if (height > MAX_PIXEL_COUNT) {
-//                    resizeScale = height / MAX_PIXEL_COUNT
-//                }
-//                if (width / resizeScale > MAX_PIXEL_COUNT || height / resizeScale > MAX_PIXEL_COUNT) {
-//                    resizeScale++
-//                }
-//                bmpOptions.inSampleSize = resizeScale
-//                var input: InputStream? = null
-//                try {
-//                    input = contentResolver.openInputStream(imageUri!!)
-//                } catch (e: FileNotFoundException) {
-//                    e.printStackTrace()
-//                    recreate()
-//                }
-//                bitmap = BitmapFactory.decodeStream(input, null, bmpOptions)
-//                runOnUiThread {
-//                    imageView!!.setImageBitmap(bitmap)
-//                    dialog.cancel()
-//                }
-//                width = bitmap!!.width
-//                height = bitmap!!.height
-//                bitmap = bitmap!!.copy(Bitmap.Config.ARGB_8888, true)
-//                pixelCount = width * height
-//                pixels = IntArray(pixelCount)
-//                bitmap?.getPixels(pixels, 0, width, 0, 0, width, height)
-//            }
-//        }.start()
     }
 
     companion object {
@@ -266,6 +159,5 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_PICK_IMAGE = 12345
         private const val REQUEST_IMAGE_CAPTURE = 1012
         private const val appID = "photoEditor"
-//        private const val MAX_PIXEL_COUNT = 2048
     }
 }
