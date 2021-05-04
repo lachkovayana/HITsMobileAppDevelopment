@@ -2,7 +2,6 @@ package com.example.photoeditor
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -77,15 +76,32 @@ class ChooseActivity : AppCompatActivity() {
                     .setPositiveButton("Да", dialogOnClickListener)
                     .setNegativeButton("Нет", dialogOnClickListener).show()
         }
-    }
-}
 
-private fun createImageFile(): File {
-    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-    val imageFileName = "/JPEG_$timeStamp.jpg"
-    val storageDir =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-    return File(storageDir.toString() + imageFileName)
+
+        val sh = findViewById<ImageButton>(R.id.share)
+        sh.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.type = "image/*"
+//            intent.putExtra(Intent.EXTRA_SUBJECT, "")
+//            intent.putExtra(Intent.EXTRA_TEXT, "")
+            intent.putExtra(Intent.EXTRA_STREAM, uri)
+            try {
+                startActivity(Intent.createChooser(intent, "Отправить с помощью:"))
+            } catch (e: Exception) {
+                Toast.makeText(this@ChooseActivity, "Нет приложений, подходящих для отправки", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+
+    private fun createImageFile(): File {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "/JPEG_$timeStamp.jpg"
+        val storageDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        return File(storageDir.toString() + imageFileName)
+    }
 }
 
 
@@ -102,9 +118,6 @@ private fun createImageFile(): File {
 //        }
 //    }
 //}
-
-
-//
 
 //    private fun createImageFile(): File {
 //        val timeStamp = SimpleDateFormat("yyyyMMdd_HHMMSS", Locale.getDefault()).format(Date())
