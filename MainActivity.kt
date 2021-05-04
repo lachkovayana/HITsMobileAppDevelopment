@@ -2,6 +2,7 @@ package com.example.photoeditor
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.ActivityManager
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,13 +18,27 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.photoeditor.databinding.ActivityMainBinding
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    //private val viewBinding by viewBinding(ActivityMainBinding::bind, R.id.rootLayout)
+    companion object {
+        private const val REQUEST_PERMISSONS = 123
+        private val PERMISSIONS = arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        private const val PERMISSIONS_COUNT = 2
+        private const val REQUEST_PICK_IMAGE = 1234
+        private const val REQUEST_IMAGE_CAPTURE = 12345
+        private const val appID = "photoEditor"
+    }
+
+    private var imageUri: Uri? = null
+    //private var imageView: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,49 +46,13 @@ class MainActivity : AppCompatActivity() {
         init()
     }
 
-    @SuppressLint("NewApi")
-    private fun notPermissions(): Boolean {
-        for (i in 0 until PERMISSIONS_COUNT) {
-            if (checkSelfPermission(PERMISSIONS[i]) != PackageManager.PERMISSION_GRANTED) {
-                return true
-            }
-        }
-        return false
-    }
-
-    override fun onResume() {
-        super.onResume()
-        requestPermissions(PERMISSIONS, REQUEST_PERMISSONS)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_PERMISSONS && grantResults.isNotEmpty()) {
-            if (notPermissions()) {
-                Toast.makeText(
-                    this,
-                    "Редактор не может работать без доступа к Вашим фото. Пожалуйста, выберите 'Разрешить'",
-                    Toast.LENGTH_LONG
-                ).show()
-//                ((ActivityManager) this.getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData();
-//                recreate();
-            }
-        }
-    }
-
-    private var imageView: ImageView? = null
-
     private fun init() {
         val takePhotoButton = findViewById<Button>(R.id.takePhotoButton)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val builder = VmPolicy.Builder()
             StrictMode.setVmPolicy(builder.build())
         }
-        imageView = findViewById(R.id.imageView)
+        //imageView = findViewById(R.id.imageView)
         if (!this@MainActivity.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
             takePhotoButton.visibility = View.GONE
         }
@@ -96,52 +75,45 @@ class MainActivity : AppCompatActivity() {
                 myPrefs.edit().putString("path", photoFile.absolutePath).apply()
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
                 startActivityForResult(
-                    takePictureIntent,
-                    REQUEST_IMAGE_CAPTURE
+                        takePictureIntent,
+                        REQUEST_IMAGE_CAPTURE
                 )
             } catch (ex: ActivityNotFoundException) {
                 Toast.makeText(
-                    this@MainActivity,
-                    "На Вашем устройстве нет камеры",
-                    Toast.LENGTH_SHORT
+                        this@MainActivity,
+                        "Не поддерживается на Вашем устройстве",
+                        Toast.LENGTH_SHORT
                 ).show()
             }
         }
-
     }
 
-    private var imageUri: Uri? = null
-    private fun createImageFile(): File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "/JPEG_$timeStamp.jpg"
-        val storageDir =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        return File(storageDir.toString() + imageFileName)
-    }
-
-
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != RESULT_OK) {
             return
         }
-        if (requestCode == REQUEST_IMAGE_CAPTURE) {
-            if (imageUri == null) {
-                val p = getSharedPreferences(appID, 0)
-                val path = p.getString("path", "")
-                if (path!!.isEmpty()) {
-                    recreate()
-                    return
-                }
-                imageUri = Uri.parse("file://$path")
+        when {
+            requestCode == REQUEST_IMAGE_CAPTURE -> {
+                if (imageUri == null) {
+                    val p = getSharedPreferences(appID, 0)
+                    val path = p.getString("path", "")
+                    if (path!!.isEmpty()) {
+                        recreate()
+                        return
+                    }
+                    imageUri = Uri.parse("file://$path")
 
+                }
+                sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, imageUri))
             }
-            sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, imageUri))
-        } else if (data == null) {
-            recreate()
-            return
-        } else if (requestCode == REQUEST_PICK_IMAGE) {
-            imageUri = data.data
+            data == null -> {
+                recreate()
+                return
+            }
+            requestCode == REQUEST_PICK_IMAGE -> {
+                imageUri = data.data
+            }
         }
         val editIntent = Intent(this@MainActivity, ChooseActivity::class.java)
         val imageToTransfer = imageUri
@@ -149,15 +121,44 @@ class MainActivity : AppCompatActivity() {
         startActivity(editIntent)
     }
 
-    companion object {
-        private const val REQUEST_PERMISSONS = 1234
-        private val PERMISSIONS = arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-        private const val PERMISSIONS_COUNT = 2
-        private const val REQUEST_PICK_IMAGE = 12345
-        private const val REQUEST_IMAGE_CAPTURE = 1012
-        private const val appID = "photoEditor"
+    override fun onResume() {
+        super.onResume()
+        if (notPermissions()) {
+            requestPermissions(PERMISSIONS, REQUEST_PERMISSONS)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<String>,
+            grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_PERMISSONS && grantResults.isNotEmpty() && notPermissions()) {
+            Toast.makeText(
+                    this,
+                    "Редактор не может работать без доступа к Вашим фото. Пожалуйста, выберите 'Разрешить'",
+                    Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+
+    @SuppressLint("NewApi")
+    private fun notPermissions(): Boolean {
+        for (i in 0 until PERMISSIONS_COUNT) {
+            if (checkSelfPermission(PERMISSIONS[i]) != PackageManager.PERMISSION_GRANTED) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun createImageFile(): File {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "/JPEG_$timeStamp.jpg"
+        val storageDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        return File(storageDir.toString() + imageFileName)
     }
 }

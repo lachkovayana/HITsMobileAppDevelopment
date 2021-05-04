@@ -20,14 +20,13 @@ import java.util.*
 
 class ChooseActivity : AppCompatActivity() {
     private var REQUEST_CODE_FILTER = 1
+    private lateinit var imageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose)
         init()
     }
-
-    private lateinit var imageView:ImageView
 
     private fun init() {
         var imageView: ImageView? = findViewById(R.id.imageViewEdit)
@@ -45,45 +44,50 @@ class ChooseActivity : AppCompatActivity() {
             val imageToTransfer = uri
             newIntent.putExtra("imgUri", imageToTransfer.toString())
             //startActivity(newIntent)
-            startActivityForResult(newIntent, REQUEST_CODE_FILTER)
+            startActivity(newIntent)
         }
-//        val saveImageButton = findViewById<ImageButton>(R.id.saveButton)
-//        saveImageButton.setOnClickListener {
-//            val builder = android.app.AlertDialog.Builder(this)
-//            val outFile = createImageFile()
-//
-//            val dialogOnClickListener =
-//                    DialogInterface.OnClickListener { _, which ->
-//                        if (which == DialogInterface.BUTTON_POSITIVE) {
-//                            try {
-//                                FileOutputStream(outFile).use { out ->
-//                                    finalBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, out)
-//                                    val imageUri = Uri.parse("file://" + outFile.absolutePath)
-//                                    sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, imageUri))
-//                                    Toast.makeText(
-//                                            this,
-//                                            "Сохранено",
-//                                            Toast.LENGTH_SHORT
-//                                    ).show()
-//                                }
-//                            } catch (e: IOException) {
-//                                e.printStackTrace()
-//                            }
-//                        }
-//                    }
-//            builder.setMessage("Сохранить фото в галерею?")
-//                    .setPositiveButton("Да", dialogOnClickListener)
-//                    .setNegativeButton("Нет", dialogOnClickListener).show()
-//        }
-    }
 
-    private fun createImageFile(): File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHMMSS", Locale.getDefault()).format(Date())
-        val imageFileName = "/JPEG_$timeStamp.jpg"
-        val storageDir =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        return File(storageDir.toString() + imageFileName)
+        val help = findViewById<Button>(R.id.help)
+        help.setOnClickListener {
+            Toast.makeText(this, "$uri", Toast.LENGTH_SHORT).show()
+        }
+
+        val saveImageButton = findViewById<ImageButton>(R.id.saveButton)
+        saveImageButton.setOnClickListener {
+            val builder = android.app.AlertDialog.Builder(this)
+            val outFile = createImageFile()
+            val dialogOnClickListener =
+                    DialogInterface.OnClickListener { _, which ->
+                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                            try {
+                                FileOutputStream(outFile).use {
+                                    sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
+                                    Toast.makeText(
+                                            this,
+                                            "Сохранено",
+                                            Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                            }
+                        }
+                    }
+            builder.setMessage("Сохранить фото в галерею?")
+                    .setPositiveButton("Да", dialogOnClickListener)
+                    .setNegativeButton("Нет", dialogOnClickListener).show()
+        }
     }
+}
+
+private fun createImageFile(): File {
+    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+    val imageFileName = "/JPEG_$timeStamp.jpg"
+    val storageDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+    return File(storageDir.toString() + imageFileName)
+}
+
 
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        super.onActivityResult(requestCode, resultCode, data)
@@ -97,4 +101,28 @@ class ChooseActivity : AppCompatActivity() {
 //            }
 //        }
 //    }
-}
+//}
+
+
+//
+
+//    private fun createImageFile(): File {
+//        val timeStamp = SimpleDateFormat("yyyyMMdd_HHMMSS", Locale.getDefault()).format(Date())
+//        val imageFileName = "/JPEG_$timeStamp.jpg"
+//        val storageDir =
+//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+//        return File(storageDir.toString() + imageFileName)
+//    }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode == RESULT_OK) {
+//            when (requestCode) {
+//                REQUEST_CODE_FILTER -> {
+//                    val uriStr = intent.getStringExtra("imgUri")
+//                    val uri = Uri.parse(uriStr)
+//                    imageView.setImageURI(uri)
+//                }
+//            }
+//        }
+//    }
