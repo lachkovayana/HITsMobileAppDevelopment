@@ -24,71 +24,146 @@
                 android:id="@+id/backButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:layout_weight="0.35"
-                android:text="Назад"
-                android:layout_margin="5dp"/>
+                android:text="Назад" />
 
             <ImageButton
-                android:backgroundTint="@color/white"
                 android:id="@+id/returnBackButton"
                 android:layout_width="0dp"
-                android:src="@android:drawable/ic_menu_revert"
                 android:layout_height="match_parent"
-                android:layout_weight="0.1" />
+                android:layout_weight="0.1"
+                android:backgroundTint="@color/white"
+                android:src="@android:drawable/ic_menu_revert" />
 
             <ImageButton
-                android:backgroundTint="@color/white"
                 android:id="@+id/returnButton"
                 android:layout_width="0dp"
-                android:rotation="180"
-                android:src="@android:drawable/ic_menu_revert"
                 android:layout_height="match_parent"
-                android:layout_weight="0.1" />
+                android:layout_weight="0.1"
+                android:backgroundTint="@color/white"
+                android:rotation="180"
+                android:src="@android:drawable/ic_menu_revert" />
 
             <Button
                 android:id="@+id/applyButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:layout_weight="0.35"
-                android:text="Применить"
-                android:layout_margin="5dp"/>
+                android:enabled="false"
+                android:text="Применить" />
         </LinearLayout>
 
-         <ImageView
+        <ImageView
             android:id="@+id/imageViewEdit"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/swap"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="F1" />
+            <HorizontalScrollView
+                android:id="@+id/hscroll"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/F2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="F2" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/F3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="F3" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical">
 
-        </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/oroginal"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/orige" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:gravity="center"
+                            android:layout_weight="0.2"
+                            android:text="оригинал" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/swap"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/swape" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:gravity="center"
+                            android:layout_weight="0.2"
+                            android:text="RB" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/grey"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/greye" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:gravity="center"
+                            android:layout_weight="0.2"
+                            android:text="Ч/Б" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/sepia"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/sepe" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:gravity="center"
+                            android:layout_weight="0.2"
+                            android:text="сепия" />
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+        </ScrollView>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="5"
                 android:background="@color/white"
+                android:tint="@color/black"
                 android:src="?attr/homeAsUpIndicator" />
 
             <TextView
@@ -33,8 +34,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
-                android:background="@color/white"
-                android:src="@drawable/dwn" />
+                android:backgroundTint="@color/white"
+                android:tint="@color/black"
+                android:src="@android:drawable/stat_sys_download" />
         </LinearLayout>
 
         <ImageView
@@ -48,7 +50,7 @@
             android:layout_height="50dp">
 
             <Button
-                android:id="@+id/ADJ"
+                android:id="@+id/help"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
