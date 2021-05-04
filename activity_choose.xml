@@ -18,8 +18,7 @@
                 android:id="@+id/backButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="5"
+                android:layout_weight="6"
                 android:background="@color/white"
                 android:tint="@color/black"
                 android:src="?attr/homeAsUpIndicator" />
@@ -30,13 +29,21 @@
                 android:layout_weight="20" />
 
             <ImageButton
+                android:id="@+id/share"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:backgroundTint="@color/white"
+                android:tint="@color/black"
+                android:src="?attr/actionModeShareDrawable" />
+            <ImageButton
                 android:id="@+id/saveButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:backgroundTint="@color/white"
                 android:tint="@color/black"
-                android:src="@android:drawable/stat_sys_download" />
+                android:src="@android:drawable/stat_sys_download_done" />
         </LinearLayout>
 
         <ImageView

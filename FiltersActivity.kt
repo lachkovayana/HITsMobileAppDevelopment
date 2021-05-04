@@ -67,6 +67,7 @@ class FiltersActivity : AppCompatActivity() {
         orig.setOnClickListener {
             bitmapBefore = finalBitmap
             imageView.setImageBitmap(bitmap)
+            finalBitmap = bitmap
         }
 
         val firstFilter = findViewById<ImageButton>(R.id.swap)
@@ -123,6 +124,42 @@ class FiltersActivity : AppCompatActivity() {
             applyButton.isEnabled = true
         }
 
+        val fourthFilter = findViewById<ImageButton>(R.id.negative)
+        fourthFilter.setOnClickListener {
+            val width = bitmap.width
+            val height = bitmap.height
+            val srcPixels = IntArray(width * height)
+            val destPixels = IntArray(width * height)
+            bitmap.getPixels(srcPixels, 0, width, 0, 0, width, height)
+            val bmDublicated = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            negative(srcPixels, destPixels)
+            bmDublicated.setPixels(destPixels, 0, width, 0, 0, width, height);
+            imageView.setImageBitmap(bmDublicated)
+            bitmapBefore = finalBitmap
+            finalBitmap = bmDublicated
+            val photoFile = createImageFile()
+            imageUri = Uri.fromFile(photoFile)
+            applyButton.isEnabled = true
+        }
+
+        val fifthFilter = findViewById<ImageButton>(R.id.red)
+        fifthFilter.setOnClickListener {
+            val width = bitmap.width
+            val height = bitmap.height
+            val srcPixels = IntArray(width * height)
+            val destPixels = IntArray(width * height)
+            bitmap.getPixels(srcPixels, 0, width, 0, 0, width, height)
+            val bmDublicated = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            red(srcPixels, destPixels)
+            bmDublicated.setPixels(destPixels, 0, width, 0, 0, width, height);
+            imageView.setImageBitmap(bmDublicated)
+            bitmapBefore = finalBitmap
+            finalBitmap = bmDublicated
+            val photoFile = createImageFile()
+            imageUri = Uri.fromFile(photoFile)
+            applyButton.isEnabled = true
+        }
+
         applyButton.setOnClickListener {
             val outFile = createImageFile()
             try {
@@ -144,10 +181,29 @@ class FiltersActivity : AppCompatActivity() {
 //        outState.putParcelable("image", finalBitmap);
 //    }
 
-    private fun sepia(src: IntArray, dest: IntArray) {
-        // конвертировать в сепию
+
+    private fun swapRB(src: IntArray, dest: IntArray) {
         for (i in src.indices) {
-//                val a = p shr 24 and 0xff
+            dest[i] = (src[i] and -0xff0100 or (src[i] and 0x000000ff shl 16)
+                    or (src[i] and 0x00ff0000 shr 16))
+        }
+    }
+
+    private fun grey(src: IntArray, dest: IntArray) {
+        for (i in src.indices) {
+            // получаем компоненты цветов пикселя
+            var r = (src[i] and 0x00FF0000 shr 16)
+            var g = (src[i] and 0x0000FF00 shr 8)
+            var b = (src[i] and 0x000000FF)
+            // делаем цвет черно-белым (оттенки серого) - находим среднее арифметическое
+            r = (((r + g + b) / 3.0f).toInt()).also { b = it }.also { g = it }
+            // собираем новый пиксель по частям (по каналам)
+            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
+        }
+    }
+
+    private fun sepia(src: IntArray, dest: IntArray) {
+        for (i in src.indices) {
             var r = (src[i] and 0x00FF0000 shr 16)
             var g = (src[i] and 0x0000FF00 shr 8)
             var b = (src[i] and 0x000000FF)
@@ -166,24 +222,22 @@ class FiltersActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun grey(src: IntArray, dest: IntArray) {
+    private fun negative(src: IntArray, dest: IntArray) {
         for (i in src.indices) {
-            // получаем компоненты цветов пикселя
             var r = (src[i] and 0x00FF0000 shr 16)
             var g = (src[i] and 0x0000FF00 shr 8)
             var b = (src[i] and 0x000000FF)
-            // делаем цвет черно-белым (оттенки серого) - находим среднее арифметическое
-            r = (((r + g + b) / 3.0f).toInt()).also { b = it }.also { g = it }
-            // собираем новый пиксель по частям (по каналам)
+            r = 255 - r
+            g = 255 - g
+            b = 255 - b
             dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
         }
     }
 
-    private fun swapRB(src: IntArray, dest: IntArray) {
+    private fun red(src: IntArray, dest: IntArray) {
         for (i in src.indices) {
-            dest[i] = (src[i] and -0xff0100 or (src[i] and 0x000000ff shl 16)
-                    or (src[i] and 0x00ff0000 shr 16))
+            var r = (src[i] and 0x00FF0000 shr 16)
+            dest[i] = -0x1000000 or (r shl 16) or (0 shl 8) or 0
         }
     }
 
