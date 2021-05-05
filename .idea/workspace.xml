@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7ac9e496-3a40-49ea-b764-a51dca029354" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/androidTest/java/com/example/photoeditor/ExampleInstrumentedTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/java/com/example/photoeditor/MainActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/java/com/example/photoeditor/MainActivity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/values-night/themes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/values/colors.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/main/res/values/themes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/app/src/test/java/com/example/photoeditor/ExampleUnitTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotoEditor/settings.gradle" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1s6ZX0XM6OjHZKMhfyX9gLZyryo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$PROJECT_DIR$/.." />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7ac9e496-3a40-49ea-b764-a51dca029354" name="Default Changelist" comment="" />
+      <created>1620195035510</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1620195035510</updated>
+    </task>
+    <servers />
+  </component>
+</project>
