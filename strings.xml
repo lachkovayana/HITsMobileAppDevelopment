@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">PhotoEditor</string>
-    <string name="b_w">B/W</string>
-    <string name="feature2">feature2</string>
-    <string name="feature3">feature3</string>
+    <string name="b_w">Ч/Б</string>
+    <string name="red">красный</string>
+    <string name="neg">негатив</string>
+    <string name="sepia">сепия</string>
+    <string name="bw">Ч/Б</string>
+    <string name="rb">RB</string>
+    <string name="original">оригинал</string>
+    <string name="apply">Применить</string>
+    <string name="back">Назад</string>
+    <string name="photo_editor">Photo Editor</string>
+    <string name="select_image">Выбрать фото</string>
+    <string name="take_photo">Сделать фото</string>
 </resources>
