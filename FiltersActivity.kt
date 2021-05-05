@@ -16,155 +16,97 @@ import java.util.*
 
 class FiltersActivity : AppCompatActivity() {
     private lateinit var imageUri: Uri
-//    private lateinit var finalBitmap:Bitmap
-//    private val imageView = findViewById<ImageView>(R.id.imageViewEdit)
+    private lateinit var finalBitmap: Bitmap
+    private lateinit var bitmapBefore: Bitmap
+    private lateinit var bitmap: Bitmap
+    private lateinit var imageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filters)
         init()
-//        if (savedInstanceState != null) {
-//            imageView.setImageBitmap(savedInstanceState.getParcelable("image"))
-//        }
     }
 
     private fun init() {
-        val uriStr = intent.getStringExtra("imgUri")
-        val uri = Uri.parse(uriStr)
-        val imageView = findViewById<ImageView>(R.id.imageViewEdit)
-
-        imageView?.setImageURI(uri)
-
-        val drawable = imageView?.drawable as BitmapDrawable
-        val bitmap = drawable.bitmap
-
-        var finalBitmap = bitmap
-        lateinit var bitmapBefore: Bitmap
 
         val applyButton = findViewById<Button>(R.id.applyButton)
         val returnButton = findViewById<ImageButton>(R.id.returnButton)
         val returnBackButton = findViewById<ImageButton>(R.id.returnBackButton)
+        val backButton = findViewById<Button>(R.id.backButton)
+        val orig = findViewById<ImageButton>(R.id.oroginal)
+        val firstFilter = findViewById<ImageButton>(R.id.swap)
+        val secondFilter = findViewById<ImageButton>(R.id.grey)
+        val thirdFilter = findViewById<ImageButton>(R.id.sepia)
+        val fourthFilter = findViewById<ImageButton>(R.id.negative)
+        val fifthFilter = findViewById<ImageButton>(R.id.red)
 
+        //получение и установка изображения из ChooseActivity
+        val uriStr = intent.getStringExtra("imgUri")
+        val uri = Uri.parse(uriStr)
+        imageView = findViewById(R.id.imageViewEdit)
+        imageView.setImageURI(uri)
+        val drawable = imageView.drawable as BitmapDrawable
+        bitmap = drawable.bitmap
+        bitmapBefore = bitmap
+        finalBitmap = bitmap
+
+        // возвращение предыдущего выбранного фильтра
         returnBackButton.setOnClickListener {
             imageView.setImageBitmap(bitmapBefore)
+            val helper = finalBitmap
+            finalBitmap = bitmapBefore
+            bitmapBefore = helper
             returnBackButton.isEnabled = false
             returnButton.isEnabled = true
         }
+
+        // возвращение последнего выбранного фильтра
         returnButton.setOnClickListener {
-            imageView.setImageBitmap(finalBitmap)
+            imageView.setImageBitmap(bitmapBefore)
             returnButton.isEnabled = false
             returnBackButton.isEnabled = true
         }
 
-        val backButton = findViewById<Button>(R.id.backButton)
+        // возвращение к ChooseActivity без сохранения изменений
         backButton.setOnClickListener {
             val editIntent = Intent(this, ChooseActivity::class.java)
             editIntent.putExtra("imgUri", uri.toString())
             startActivity(editIntent)
         }
 
-        val orig = findViewById<ImageButton>(R.id.oroginal)
+        // фильтры
         orig.setOnClickListener {
             bitmapBefore = finalBitmap
             imageView.setImageBitmap(bitmap)
             finalBitmap = bitmap
         }
 
-        val firstFilter = findViewById<ImageButton>(R.id.swap)
         firstFilter.setOnClickListener {
-            val width = bitmap.width
-            val height = bitmap.height
-            val srcPixels = IntArray(width * height)
-            val destPixels = IntArray(width * height)
-            bitmap.getPixels(srcPixels, 0, width, 0, 0, width, height)
-            val bmDublicated = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            swapRB(srcPixels, destPixels)
-            bmDublicated.setPixels(destPixels, 0, width, 0, 0, width, height)
-            imageView.setImageBitmap(bmDublicated)
-            bitmapBefore = finalBitmap
-            finalBitmap = bmDublicated
-            val photoFile = createImageFile()
-            imageUri = Uri.fromFile(photoFile)
-            applyButton.isEnabled = true
+            filter("swap")
         }
 
-        val secondFilter = findViewById<ImageButton>(R.id.grey)
         secondFilter.setOnClickListener {
-            val width = bitmap.width
-            val height = bitmap.height
-            val srcPixels = IntArray(width * height)
-            val destPixels = IntArray(width * height)
-            bitmap.getPixels(srcPixels, 0, width, 0, 0, width, height)
-            val bmDublicated = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            grey(srcPixels, destPixels)
-            bmDublicated.setPixels(destPixels, 0, width, 0, 0, width, height);
-            imageView.setImageBitmap(bmDublicated)
-            bitmapBefore = finalBitmap
-            finalBitmap = bmDublicated
-            val photoFile = createImageFile()
-            imageUri = Uri.fromFile(photoFile)
-            applyButton.isEnabled = true
+            filter("grey")
         }
 
-        val thirdFilter = findViewById<ImageButton>(R.id.sepia)
         thirdFilter.setOnClickListener {
-            val width = bitmap.width
-            val height = bitmap.height
-            val srcPixels = IntArray(width * height)
-            val destPixels = IntArray(width * height)
-            bitmap.getPixels(srcPixels, 0, width, 0, 0, width, height)
-            val bmDublicated = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            sepia(srcPixels, destPixels)
-            bmDublicated.setPixels(destPixels, 0, width, 0, 0, width, height);
-            imageView.setImageBitmap(bmDublicated)
-            bitmapBefore = finalBitmap
-            finalBitmap = bmDublicated
-            val photoFile = createImageFile()
-            imageUri = Uri.fromFile(photoFile)
-            applyButton.isEnabled = true
+            filter("sepia")
         }
 
-        val fourthFilter = findViewById<ImageButton>(R.id.negative)
         fourthFilter.setOnClickListener {
-            val width = bitmap.width
-            val height = bitmap.height
-            val srcPixels = IntArray(width * height)
-            val destPixels = IntArray(width * height)
-            bitmap.getPixels(srcPixels, 0, width, 0, 0, width, height)
-            val bmDublicated = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            negative(srcPixels, destPixels)
-            bmDublicated.setPixels(destPixels, 0, width, 0, 0, width, height);
-            imageView.setImageBitmap(bmDublicated)
-            bitmapBefore = finalBitmap
-            finalBitmap = bmDublicated
-            val photoFile = createImageFile()
-            imageUri = Uri.fromFile(photoFile)
-            applyButton.isEnabled = true
+            filter("negative")
         }
 
-        val fifthFilter = findViewById<ImageButton>(R.id.red)
         fifthFilter.setOnClickListener {
-            val width = bitmap.width
-            val height = bitmap.height
-            val srcPixels = IntArray(width * height)
-            val destPixels = IntArray(width * height)
-            bitmap.getPixels(srcPixels, 0, width, 0, 0, width, height)
-            val bmDublicated = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            red(srcPixels, destPixels)
-            bmDublicated.setPixels(destPixels, 0, width, 0, 0, width, height);
-            imageView.setImageBitmap(bmDublicated)
-            bitmapBefore = finalBitmap
-            finalBitmap = bmDublicated
-            val photoFile = createImageFile()
-            imageUri = Uri.fromFile(photoFile)
-            applyButton.isEnabled = true
+            filter("red")
         }
 
+        // применение изменений и возврат на экран выбора действий
         applyButton.setOnClickListener {
             val outFile = createImageFile()
             try {
                 FileOutputStream(outFile).use { out ->
-                    finalBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                    finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
                     val imageUri = Uri.parse("file://" + outFile.absolutePath)
                     val intent = Intent(this, ChooseActivity::class.java)
                     intent.putExtra("imgUri", imageUri.toString())
@@ -176,12 +118,30 @@ class FiltersActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        outState.putParcelable("image", finalBitmap);
-//    }
+    // установка выбранного фильтра
+    private fun filter(filterName: String) {
+        val width = bitmap.width
+        val height = bitmap.height
+        val srcPixels = IntArray(width * height)
+        val destPixels = IntArray(width * height)
+        bitmap.getPixels(srcPixels, 0, width, 0, 0, width, height)
+        val bmDublicated = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        when (filterName) {
+            "swap" -> swapRB(srcPixels, destPixels)
+            "grey" -> grey(srcPixels, destPixels)
+            "sepia" -> sepia(srcPixels, destPixels)
+            "negative" -> negative(srcPixels, destPixels)
+            "red" -> red(srcPixels, destPixels)
+        }
+        bmDublicated.setPixels(destPixels, 0, width, 0, 0, width, height);
+        imageView.setImageBitmap(bmDublicated)
+        bitmapBefore = finalBitmap
+        finalBitmap = bmDublicated
+        val photoFile = createImageFile()
+        imageUri = Uri.fromFile(photoFile)
+    }
 
-
+    // замена красного цвета на голубой и наоборот
     private fun swapRB(src: IntArray, dest: IntArray) {
         for (i in src.indices) {
             dest[i] = (src[i] and -0xff0100 or (src[i] and 0x000000ff shl 16)
@@ -189,15 +149,18 @@ class FiltersActivity : AppCompatActivity() {
         }
     }
 
+
     private fun grey(src: IntArray, dest: IntArray) {
         for (i in src.indices) {
             // получаем компоненты цветов пикселя
             var r = (src[i] and 0x00FF0000 shr 16)
             var g = (src[i] and 0x0000FF00 shr 8)
             var b = (src[i] and 0x000000FF)
+
             // делаем цвет черно-белым (оттенки серого) - находим среднее арифметическое
             r = (((r + g + b) / 3.0f).toInt()).also { b = it }.also { g = it }
-            // собираем новый пиксель по частям (по каналам)
+
+            // собираем новый пиксель по частям
             dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
         }
     }
@@ -227,101 +190,28 @@ class FiltersActivity : AppCompatActivity() {
             var r = (src[i] and 0x00FF0000 shr 16)
             var g = (src[i] and 0x0000FF00 shr 8)
             var b = (src[i] and 0x000000FF)
+
             r = 255 - r
             g = 255 - g
             b = 255 - b
+
             dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
         }
     }
 
     private fun red(src: IntArray, dest: IntArray) {
         for (i in src.indices) {
-            var r = (src[i] and 0x00FF0000 shr 16)
+            val r = (src[i] and 0x00FF0000 shr 16)
             dest[i] = -0x1000000 or (r shl 16) or (0 shl 8) or 0
         }
     }
 
+    // создание файла с текущим изображением
     private fun createImageFile(): File {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val imageFileName = "/JPEG_$timeStamp.jpg"
         val storageDir =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         return File(storageDir.toString() + imageFileName)
     }
-
 }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (resultCode == RESULT_OK) {
-//            val imageUri = data?.data
-//            bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
-//            finalBitmap = bitmap
-//        }
-//    }
-
-//    private var width = 0
-//    private var height = 0
-//    private lateinit var pixels: IntArray
-//    private var pixelCount = 0
-//    private val MAX_PIXEL_COUNT = 2048
-//    private val REQUEST_PICK_IMAGE = 12345
-//    private val REQUEST_IMAGE_CAPTURE = 1012
-//    private val appID = "photoEditor"
-//    val dialog = ProgressDialog.show(
-//        this, "Loading",
-//        "Please, wait", true
-//    )
-
-//    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        object : Thread() {
-//            override fun run() {
-//                bitmap = null
-//                val bmpOptions = BitmapFactory.Options()
-//                bmpOptions.inBitmap = bitmap
-//                bmpOptions.inJustDecodeBounds = true
-//                try {
-//                    contentResolver.openInputStream(imageUri!!).use { input ->
-//                        bitmap = BitmapFactory.decodeStream(input, null, bmpOptions)
-//finalBitmap = bitmap
-//                    }
-//                } catch (e: IOException) {
-//                    e.printStackTrace()
-//                }
-//                bmpOptions.inJustDecodeBounds = false
-//                width = bmpOptions.outWidth
-//                height = bmpOptions.outHeight
-//                var resizeScale = 1
-//                if (width > MAX_PIXEL_COUNT) {
-//                    resizeScale = width / MAX_PIXEL_COUNT
-//                } else if (height > MAX_PIXEL_COUNT) {
-//                    resizeScale = height / MAX_PIXEL_COUNT
-//                }
-//                if (width / resizeScale > MAX_PIXEL_COUNT || height / resizeScale > MAX_PIXEL_COUNT) {
-//                    resizeScale++
-//                }
-//                bmpOptions.inSampleSize = resizeScale
-//                var input: InputStream? = null
-//                try {
-//                    input = contentResolver.openInputStream(imageUri!!)
-//                } catch (e: FileNotFoundException) {
-//                    e.printStackTrace()
-//                    recreate()
-//                }
-//                bitmap = BitmapFactory.decodeStream(input, null, bmpOptions)
-//                runOnUiThread {
-//                    imageView!!.setImageBitmap(bitmap)
-//                    dialog.cancel()
-//                }
-//                width = bitmap!!.width
-//                height = bitmap!!.height
-//                bitmap = bitmap!!.copy(Bitmap.Config.ARGB_8888, true)
-//                pixelCount = width * height
-//                pixels = IntArray(pixelCount)
-//                bitmap?.getPixels(pixels, 0, width, 0, 0, width, height)
-//            }
-//        }.start()
-//    }
-//}

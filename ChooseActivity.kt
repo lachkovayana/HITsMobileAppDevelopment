@@ -18,8 +18,6 @@ import java.util.*
 
 
 class ChooseActivity : AppCompatActivity() {
-    private var REQUEST_CODE_FILTER = 1
-    private lateinit var imageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,114 +26,79 @@ class ChooseActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        var imageView: ImageView? = findViewById(R.id.imageViewEdit)
+        val backButton = findViewById<ImageButton>(R.id.backButton)
+        val col = findViewById<Button>(R.id.COL)
+        val saveImageButton = findViewById<ImageButton>(R.id.saveButton)
+        val sharing = findViewById<ImageButton>(R.id.share)
+
+        //установка переданного изображения
         val uriStr = intent.getStringExtra("imgUri")
         val uri = Uri.parse(uriStr)
-        imageView?.setImageURI(uri)
+        val imageView: ImageView = findViewById(R.id.imageViewEdit)
+        imageView.setImageURI(uri)
 
-        val backButton = findViewById<ImageButton>(R.id.backButton)
+        // возвращение к экрану выбора фото
         backButton.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
-        val col = findViewById<Button>(R.id.COL)
+
+        // фильтры
         col.setOnClickListener {
             val newIntent = Intent(this, FiltersActivity::class.java)
-            val imageToTransfer = uri
-            newIntent.putExtra("imgUri", imageToTransfer.toString())
-            //startActivity(newIntent)
+            newIntent.putExtra("imgUri", uri.toString())
             startActivity(newIntent)
         }
 
-        val help = findViewById<Button>(R.id.help)
-        help.setOnClickListener {
-            Toast.makeText(this, "$uri", Toast.LENGTH_SHORT).show()
-        }
-
-        val saveImageButton = findViewById<ImageButton>(R.id.saveButton)
+        // сохранение полученного фото
         saveImageButton.setOnClickListener {
             val builder = android.app.AlertDialog.Builder(this)
             val outFile = createImageFile()
             val dialogOnClickListener =
-                    DialogInterface.OnClickListener { _, which ->
-                        if (which == DialogInterface.BUTTON_POSITIVE) {
-                            try {
-                                FileOutputStream(outFile).use {
-                                    sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
-                                    Toast.makeText(
-                                            this,
-                                            "Сохранено",
-                                            Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            } catch (e: IOException) {
-                                e.printStackTrace()
+                DialogInterface.OnClickListener { _, which ->
+                    if (which == DialogInterface.BUTTON_POSITIVE) {
+                        try {
+                            FileOutputStream(outFile).use {
+                                sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
+                                Toast.makeText(
+                                    this,
+                                    "Сохранено",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
+                        } catch (e: IOException) {
+                            e.printStackTrace()
                         }
                     }
+                }
             builder.setMessage("Сохранить фото в галерею?")
-                    .setPositiveButton("Да", dialogOnClickListener)
-                    .setNegativeButton("Нет", dialogOnClickListener).show()
+                .setPositiveButton("Да", dialogOnClickListener)
+                .setNegativeButton("Нет", dialogOnClickListener).show()
         }
 
-
-        val sh = findViewById<ImageButton>(R.id.share)
-        sh.setOnClickListener {
+        // "поделиться" полученным изображением
+        sharing.setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_SEND
             intent.type = "image/*"
-//            intent.putExtra(Intent.EXTRA_SUBJECT, "")
-//            intent.putExtra(Intent.EXTRA_TEXT, "")
             intent.putExtra(Intent.EXTRA_STREAM, uri)
             try {
                 startActivity(Intent.createChooser(intent, "Отправить с помощью:"))
             } catch (e: Exception) {
-                Toast.makeText(this@ChooseActivity, "Нет приложений, подходящих для отправки", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@ChooseActivity,
+                    "Нет приложений, подходящих для отправки",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
-
     }
 
+    // создание файла из текущего изображения
     private fun createImageFile(): File {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val imageFileName = "/JPEG_$timeStamp.jpg"
         val storageDir =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         return File(storageDir.toString() + imageFileName)
     }
 }
-
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (resultCode == RESULT_OK) {
-//            when (requestCode) {
-//                REQUEST_CODE_FILTER -> {
-//                    val uriStr = intent.getStringExtra("imgUri")
-//                    val uri = Uri.parse(uriStr)
-//                    imageView.setImageURI(uri)
-//                }
-//            }
-//        }
-//    }
-//}
-
-//    private fun createImageFile(): File {
-//        val timeStamp = SimpleDateFormat("yyyyMMdd_HHMMSS", Locale.getDefault()).format(Date())
-//        val imageFileName = "/JPEG_$timeStamp.jpg"
-//        val storageDir =
-//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-//        return File(storageDir.toString() + imageFileName)
-//    }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (resultCode == RESULT_OK) {
-//            when (requestCode) {
-//                REQUEST_CODE_FILTER -> {
-//                    val uriStr = intent.getStringExtra("imgUri")
-//                    val uri = Uri.parse(uriStr)
-//                    imageView.setImageURI(uri)
-//                }
-//            }
-//        }
-//    }
