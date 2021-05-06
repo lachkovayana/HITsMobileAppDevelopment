@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 
 class UnsharpMaskingActivity : AppCompatActivity() {
@@ -28,6 +29,7 @@ class UnsharpMaskingActivity : AppCompatActivity() {
         val amountEditText = findViewById<EditText>(R.id.amountEditText)
         val radiusEditText = findViewById<EditText>(R.id.radiusEditText)
         val thresholdEditText = findViewById<EditText>(R.id.thresholdEditText)
+        val returnBackButton = findViewById<ImageButton>(R.id.returnBackButton)
 
         val uriStr = intent.getStringExtra("imgUri")
         val uri = Uri.parse(uriStr)
@@ -41,16 +43,19 @@ class UnsharpMaskingActivity : AppCompatActivity() {
 
         changeButton.setOnClickListener {
             val amount = amountEditText.text.toString().toDouble()
-            val radius = radiusEditText.text.toString().toInt()
+            val radius = radiusEditText.text.toString().toDouble()
             val threshold = thresholdEditText.text.toString().toInt()
-            println(amount)
-            println(radius)
-            println(threshold)
+
             unsharpMasking(radius, threshold)
+        }
+
+        returnBackButton.setOnClickListener {
+            imageView.setImageBitmap(bitmapBefore)
+            finalBitmap = bitmapBefore.also { bitmapBefore = finalBitmap }
         }
     }
 
-    private fun unsharpMasking(radius: Int, threshold: Int){
+    private fun unsharpMasking(radius: Double, threshold: Int){
         val width = bitmap.width
         println(width)
         val height = bitmap.height
@@ -62,7 +67,6 @@ class UnsharpMaskingActivity : AppCompatActivity() {
         val imageMask = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
 
 
-        //grey(srcPixels, destPixels)
         gaussianBlur(startPixels, maskPixels, width, radius)
         comparison(startPixels, maskPixels, resultPixels, threshold)
 
@@ -74,7 +78,7 @@ class UnsharpMaskingActivity : AppCompatActivity() {
 
     }
 
-    private fun gaussianBlur(start: IntArray, mask: IntArray, width: Int, radius: Int) {
+    private fun gaussianBlur(start: IntArray, mask: IntArray, width: Int, radius: Double) {
         var numberString = 0
         for (i in start.indices) {
             var r = 0
@@ -89,7 +93,7 @@ class UnsharpMaskingActivity : AppCompatActivity() {
             }
 
             //размытие строки
-            for (j in 0..radius) {
+            for (j in 0..radius.toInt()) {
                 if (i + j < numberString * width) {
                     r += (start[i + j] and 0x00FF0000 shr 16)
                     g += (start[i + j] and 0x0000FF00 shr 8)
@@ -110,122 +114,7 @@ class UnsharpMaskingActivity : AppCompatActivity() {
             g /= numberRGB
             b /= numberRGB
             mask[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-            //размытие строки радиус 3
-            /*when {
-                i - 3 >= (numberString - 1) * width -> {
-                    when {
-                        i + 3 < numberString * width -> {
-                            var r = ((src[i - 3] and 0x00FF0000 shr 16) + (src[i - 2] and 0x00FF0000 shr 16) + (src[i - 1] and 0x00FF0000 shr 16) + (src[i] and 0x00FF0000 shr 16) + (src[i + 1] and 0x00FF0000 shr 16) + (src[i + 2] and 0x00FF0000 shr 16) + (src[i + 3] and 0x00FF0000 shr 16)) / 7
-                            var g = ((src[i - 3] and 0x0000FF00 shr 8) + (src[i - 2] and 0x0000FF00 shr 8) + (src[i - 1] and 0x0000FF00 shr 8) + (src[i] and 0x0000FF00 shr 8) + (src[i + 1] and 0x0000FF00 shr 8) + (src[i + 2] and 0x0000FF00 shr 8) + (src[i + 3] and 0x0000FF00 shr 8)) / 7
-                            var b = ((src[i - 3] and 0x000000FF) + (src[i - 2] and 0x000000FF) + (src[i - 1] and 0x000000FF) + (src[i] and 0x000000FF) + (src[i + 1] and 0x000000FF) + (src[i + 2] and 0x000000FF) + (src[i + 3] and 0x000000FF)) / 7
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                        i + 2 < numberString * width -> {
-                            var r = ((src[i - 3] and 0x00FF0000 shr 16) + (src[i - 2] and 0x00FF0000 shr 16) + (src[i - 1] and 0x00FF0000 shr 16) + (src[i] and 0x00FF0000 shr 16) + (src[i + 1] and 0x00FF0000 shr 16) + (src[i + 2] and 0x00FF0000 shr 16)) / 6
-                            var g = ((src[i - 3] and 0x0000FF00 shr 8) + (src[i - 2] and 0x0000FF00 shr 8) + (src[i - 1] and 0x0000FF00 shr 8) + (src[i] and 0x0000FF00 shr 8) + (src[i + 1] and 0x0000FF00 shr 8) + (src[i + 2] and 0x0000FF00 shr 8)) / 6
-                            var b = ((src[i - 3] and 0x000000FF) + (src[i - 2] and 0x000000FF) + (src[i - 1] and 0x000000FF) + (src[i] and 0x000000FF) + (src[i + 1] and 0x000000FF) + (src[i + 2] and 0x000000FF)) / 6
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                        i + 1 < numberString * width -> {
-                            var r = ((src[i - 3] and 0x00FF0000 shr 16) + (src[i - 2] and 0x00FF0000 shr 16) + (src[i - 1] and 0x00FF0000 shr 16) + (src[i] and 0x00FF0000 shr 16) + (src[i + 1] and 0x00FF0000 shr 16)) / 5
-                            var g = ((src[i - 3] and 0x0000FF00 shr 8) + (src[i - 2] and 0x0000FF00 shr 8) + (src[i - 1] and 0x0000FF00 shr 8) + (src[i] and 0x0000FF00 shr 8) + (src[i + 1] and 0x0000FF00 shr 8)) / 5
-                            var b = ((src[i - 3] and 0x000000FF) + (src[i - 2] and 0x000000FF) + (src[i - 1] and 0x000000FF) + (src[i] and 0x000000FF) + (src[i + 1] and 0x000000FF)) / 5
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                        i < numberString * width -> {
-                            var r = ((src[i - 3] and 0x00FF0000 shr 16) + (src[i - 2] and 0x00FF0000 shr 16) + (src[i - 1] and 0x00FF0000 shr 16) + (src[i] and 0x00FF0000 shr 16)) / 4
-                            var g = ((src[i - 3] and 0x0000FF00 shr 8) + (src[i - 2] and 0x0000FF00 shr 8) + (src[i - 1] and 0x0000FF00 shr 8) + (src[i] and 0x0000FF00 shr 8)) / 4
-                            var b = ((src[i - 3] and 0x000000FF) + (src[i - 2] and 0x000000FF) + (src[i - 1] and 0x000000FF) + (src[i] and 0x000000FF)) / 4
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                    }
-                }
-                i - 2 >= (numberString - 1) * width -> {
-                    when {
-                        i + 3 < numberString * width -> {
-                            var r = ((src[i - 2] and 0x00FF0000 shr 16) + (src[i - 1] and 0x00FF0000 shr 16) + (src[i] and 0x00FF0000 shr 16) + (src[i + 1] and 0x00FF0000 shr 16) + (src[i + 2] and 0x00FF0000 shr 16) + (src[i + 3] and 0x00FF0000 shr 16)) / 6
-                            var g = ((src[i - 2] and 0x0000FF00 shr 8) + (src[i - 1] and 0x0000FF00 shr 8) + (src[i] and 0x0000FF00 shr 8) + (src[i + 1] and 0x0000FF00 shr 8) + (src[i + 2] and 0x0000FF00 shr 8) + (src[i + 3] and 0x0000FF00 shr 8)) / 6
-                            var b = ((src[i - 2] and 0x000000FF) + (src[i - 1] and 0x000000FF) + (src[i] and 0x000000FF) + (src[i + 1] and 0x000000FF) + (src[i + 2] and 0x000000FF) + (src[i + 3] and 0x000000FF)) / 6
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                        i + 2 < numberString * width -> {
-                            var r = ((src[i - 2] and 0x00FF0000 shr 16) + (src[i - 1] and 0x00FF0000 shr 16) + (src[i] and 0x00FF0000 shr 16) + (src[i + 1] and 0x00FF0000 shr 16) + (src[i + 2] and 0x00FF0000 shr 16)) / 5
-                            var g = ((src[i - 2] and 0x0000FF00 shr 8) + (src[i - 1] and 0x0000FF00 shr 8) + (src[i] and 0x0000FF00 shr 8) + (src[i + 1] and 0x0000FF00 shr 8) + (src[i + 2] and 0x0000FF00 shr 8)) / 5
-                            var b = ((src[i - 2] and 0x000000FF) + (src[i - 1] and 0x000000FF) + (src[i] and 0x000000FF) + (src[i + 1] and 0x000000FF) + (src[i + 2] and 0x000000FF)) / 5
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                        i + 1 < numberString * width -> {
-                            var r = ((src[i - 2] and 0x00FF0000 shr 16) + (src[i - 1] and 0x00FF0000 shr 16) + (src[i] and 0x00FF0000 shr 16) + (src[i + 1] and 0x00FF0000 shr 16)) / 4
-                            var g = ((src[i - 2] and 0x0000FF00 shr 8) + (src[i - 1] and 0x0000FF00 shr 8) + (src[i] and 0x0000FF00 shr 8) + (src[i + 1] and 0x0000FF00 shr 8)) / 4
-                            var b = ((src[i - 2] and 0x000000FF) + (src[i - 1] and 0x000000FF) + (src[i] and 0x000000FF) + (src[i + 1] and 0x000000FF)) / 4
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                        i < numberString * width -> {
-                            var r = ((src[i - 2] and 0x00FF0000 shr 16) + (src[i - 1] and 0x00FF0000 shr 16) + (src[i] and 0x00FF0000 shr 16)) / 3
-                            var g = ((src[i - 2] and 0x0000FF00 shr 8) + (src[i - 1] and 0x0000FF00 shr 8) + (src[i] and 0x0000FF00 shr 8)) / 3
-                            var b = ((src[i - 2] and 0x000000FF) + (src[i - 1] and 0x000000FF) + (src[i] and 0x000000FF)) / 3
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                    }
-                }
-                i - 1 >= (numberString - 1) * width -> {
-                    when {
-                        i + 3 < numberString * width -> {
-                            var r = ((src[i - 1] and 0x00FF0000 shr 16) + (src[i] and 0x00FF0000 shr 16) + (src[i + 1] and 0x00FF0000 shr 16) + (src[i + 2] and 0x00FF0000 shr 16) + (src[i + 3] and 0x00FF0000 shr 16)) / 5
-                            var g = ((src[i - 1] and 0x0000FF00 shr 8) + (src[i] and 0x0000FF00 shr 8) + (src[i + 1] and 0x0000FF00 shr 8) + (src[i + 2] and 0x0000FF00 shr 8) + (src[i + 3] and 0x0000FF00 shr 8)) / 5
-                            var b = ((src[i - 1] and 0x000000FF) + (src[i] and 0x000000FF) + (src[i + 1] and 0x000000FF) + (src[i + 2] and 0x000000FF) + (src[i + 3] and 0x000000FF)) / 5
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                        i + 2 < numberString * width -> {
-                            var r = ((src[i - 1] and 0x00FF0000 shr 16) + (src[i] and 0x00FF0000 shr 16) + (src[i + 1] and 0x00FF0000 shr 16) + (src[i + 2] and 0x00FF0000 shr 16)) / 4
-                            var g = ((src[i - 1] and 0x0000FF00 shr 8) + (src[i] and 0x0000FF00 shr 8) + (src[i + 1] and 0x0000FF00 shr 8) + (src[i + 2] and 0x0000FF00 shr 8)) / 4
-                            var b = ((src[i - 1] and 0x000000FF) + (src[i] and 0x000000FF) + (src[i + 1] and 0x000000FF) + (src[i + 2] and 0x000000FF)) / 4
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                        i + 1 < numberString * width -> {
-                            var r = ((src[i - 1] and 0x00FF0000 shr 16) + (src[i] and 0x00FF0000 shr 16) + (src[i + 1] and 0x00FF0000 shr 16)) / 3
-                            var g = ((src[i - 1] and 0x0000FF00 shr 8) + (src[i] and 0x0000FF00 shr 8) + (src[i + 1] and 0x0000FF00 shr 8)) / 3
-                            var b = ((src[i - 1] and 0x000000FF) + (src[i] and 0x000000FF) + (src[i + 1] and 0x000000FF)) / 3
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                        i < numberString * width -> {
-                            var r = ((src[i - 1] and 0x00FF0000 shr 16) + (src[i] and 0x00FF0000 shr 16)) / 2
-                            var g = ((src[i - 1] and 0x0000FF00 shr 8) + (src[i] and 0x0000FF00 shr 8)) / 2
-                            var b = ((src[i - 1] and 0x000000FF) + (src[i] and 0x000000FF)) / 2
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                    }
-                }
-                i >= (numberString - 1) * width -> {
-                    when {
-                        i + 3 < numberString * width -> {
-                            var r = ((src[i] and 0x00FF0000 shr 16) + (src[i + 1] and 0x00FF0000 shr 16) + (src[i + 2] and 0x00FF0000 shr 16) + (src[i + 3] and 0x00FF0000 shr 16)) / 4
-                            var g = ((src[i] and 0x0000FF00 shr 8) + (src[i + 1] and 0x0000FF00 shr 8) + (src[i + 2] and 0x0000FF00 shr 8) + (src[i + 3] and 0x0000FF00 shr 8)) / 4
-                            var b = ((src[i] and 0x000000FF) + (src[i + 1] and 0x000000FF) + (src[i + 2] and 0x000000FF) + (src[i + 3] and 0x000000FF)) / 4
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                        i + 2 < numberString * width -> {
-                            var r = ((src[i] and 0x00FF0000 shr 16) + (src[i + 1] and 0x00FF0000 shr 16) + (src[i + 2] and 0x00FF0000 shr 16)) / 3
-                            var g = ((src[i] and 0x0000FF00 shr 8) + (src[i + 1] and 0x0000FF00 shr 8) + (src[i + 2] and 0x0000FF00 shr 8)) / 3
-                            var b = ((src[i] and 0x000000FF) + (src[i + 1] and 0x000000FF) + (src[i + 2] and 0x000000FF)) / 3
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                        i + 1 < numberString * width -> {
-                            var r = ((src[i] and 0x00FF0000 shr 16) + (src[i + 1] and 0x00FF0000 shr 16)) / 2
-                            var g = ((src[i] and 0x0000FF00 shr 8) + (src[i + 1] and 0x0000FF00 shr 8)) / 2
-                            var b = ((src[i] and 0x000000FF) + (src[i + 1] and 0x000000FF)) / 2
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                        i < numberString * width -> {
-                            var r = ((src[i] and 0x00FF0000 shr 16))
-                            var g = ((src[i] and 0x0000FF00 shr 8))
-                            var b = ((src[i] and 0x000000FF))
-                            dest[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                        }
-                    }
-                }
 
-            }*/
         }
     }
 
@@ -256,11 +145,9 @@ class UnsharpMaskingActivity : AppCompatActivity() {
             {
                 //mask[i] = -0x1000000 or (rSrc shl 16) or (gSrc shl 8) or bSrc
                 result[i] = -0x1000000 or (rSrc shl 16) or (gSrc shl 8) or bSrc
-                println("привет")
             }
             else{
                 result[i] = -0x1000000 or (rMask shl 16) or (gMask shl 8) or bMask
-                println("пока")
 
             }*/
         }
