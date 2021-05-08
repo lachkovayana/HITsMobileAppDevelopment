@@ -81,12 +81,12 @@
                 android:text="spl" />
 
             <Button
-                android:id="@+id/FACE"
+                android:id="@+id/retouch"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:text="faces" />
+                android:text="retouch" />
 
             <Button
                 android:id="@+id/CUBE"
