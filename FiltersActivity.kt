@@ -15,6 +15,7 @@ import java.util.*
 
 
 class FiltersActivity : AppCompatActivity() {
+
     private lateinit var imageUri: Uri
     private lateinit var finalBitmap: Bitmap
     private lateinit var bitmapBefore: Bitmap
@@ -41,7 +42,7 @@ class FiltersActivity : AppCompatActivity() {
         val fifthFilter = findViewById<ImageButton>(R.id.red)
 
         //получение и установка изображения из ChooseActivity
-        val uriStr = intent.getStringExtra("imgUri")
+        val uriStr = intent.getStringExtra(this.getString(R.string.imageUri))
         val uri = Uri.parse(uriStr)
         imageView = findViewById(R.id.imageViewEdit)
         imageView.setImageURI(uri)
@@ -49,6 +50,13 @@ class FiltersActivity : AppCompatActivity() {
         bitmap = drawable.bitmap
         bitmapBefore = bitmap
         finalBitmap = bitmap
+
+        // возвращение к ChooseActivity без сохранения изменений
+        backButton.setOnClickListener {
+            val editIntent = Intent(this, ChooseActivity::class.java)
+            editIntent.putExtra(this.getString(R.string.imageUri), uri.toString())
+            startActivity(editIntent)
+        }
 
         // возвращение предыдущего выбранного фильтра
         returnBackButton.setOnClickListener {
@@ -63,15 +71,29 @@ class FiltersActivity : AppCompatActivity() {
         // возвращение последнего выбранного фильтра
         returnButton.setOnClickListener {
             imageView.setImageBitmap(bitmapBefore)
+            val helper = finalBitmap
+            finalBitmap = bitmapBefore
+            bitmapBefore = helper
             returnButton.isEnabled = false
             returnBackButton.isEnabled = true
         }
 
-        // возвращение к ChooseActivity без сохранения изменений
-        backButton.setOnClickListener {
-            val editIntent = Intent(this, ChooseActivity::class.java)
-            editIntent.putExtra("imgUri", uri.toString())
-            startActivity(editIntent)
+        // применение изменений и возврат на экран выбора действий
+        applyButton.setOnClickListener {
+            val outFile = createImageFile()
+            try {
+                FileOutputStream(outFile).use { out ->
+                    finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                    // try
+                    //outFile.path
+                    val imageUri = Uri.parse("file://" + outFile.absolutePath)
+                    val intent = Intent(this, ChooseActivity::class.java)
+                    intent.putExtra(this.getString(R.string.imageUri), imageUri.toString())
+                    startActivity(intent)
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
 
         // фильтры
@@ -82,56 +104,41 @@ class FiltersActivity : AppCompatActivity() {
         }
 
         firstFilter.setOnClickListener {
-            filter("swap")
+            filter(1)
         }
 
         secondFilter.setOnClickListener {
-            filter("grey")
+            filter(2)
         }
 
         thirdFilter.setOnClickListener {
-            filter("sepia")
+            filter(3)
         }
 
         fourthFilter.setOnClickListener {
-            filter("negative")
+            filter(4)
         }
 
         fifthFilter.setOnClickListener {
-            filter("red")
+            filter(5)
         }
 
-        // применение изменений и возврат на экран выбора действий
-        applyButton.setOnClickListener {
-            val outFile = createImageFile()
-            try {
-                FileOutputStream(outFile).use { out ->
-                    finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-                    val imageUri = Uri.parse("file://" + outFile.absolutePath)
-                    val intent = Intent(this, ChooseActivity::class.java)
-                    intent.putExtra("imgUri", imageUri.toString())
-                    startActivity(intent)
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
     }
 
     // установка выбранного фильтра
-    private fun filter(filterName: String) {
+    private fun filter(filterNum: Int) {
         val width = bitmap.width
         val height = bitmap.height
         val srcPixels = IntArray(width * height)
         val destPixels = IntArray(width * height)
         bitmap.getPixels(srcPixels, 0, width, 0, 0, width, height)
         val bmDublicated = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        when (filterName) {
-            "swap" -> swapRB(srcPixels, destPixels)
-            "grey" -> grey(srcPixels, destPixels)
-            "sepia" -> sepia(srcPixels, destPixels)
-            "negative" -> negative(srcPixels, destPixels)
-            "red" -> red(srcPixels, destPixels)
+        when (filterNum) {
+            1 -> swapRB(srcPixels, destPixels)
+            2 -> grey(srcPixels, destPixels)
+            3 -> sepia(srcPixels, destPixels)
+            4 -> negative(srcPixels, destPixels)
+            5 -> red(srcPixels, destPixels)
         }
         bmDublicated.setPixels(destPixels, 0, width, 0, 0, width, height);
         imageView.setImageBitmap(bmDublicated)

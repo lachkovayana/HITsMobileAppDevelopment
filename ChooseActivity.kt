@@ -27,12 +27,13 @@ class ChooseActivity : AppCompatActivity() {
 
     private fun init() {
         val backButton = findViewById<ImageButton>(R.id.backButton)
+        val masking = findViewById<Button>(R.id.retouch)
         val col = findViewById<Button>(R.id.COL)
         val saveImageButton = findViewById<ImageButton>(R.id.saveButton)
         val sharing = findViewById<ImageButton>(R.id.share)
 
         //установка переданного изображения
-        val uriStr = intent.getStringExtra("imgUri")
+        val uriStr = intent.getStringExtra(getString(R.string.imageUri))
         val uri = Uri.parse(uriStr)
         val imageView: ImageView = findViewById(R.id.imageViewEdit)
         imageView.setImageURI(uri)
@@ -45,7 +46,14 @@ class ChooseActivity : AppCompatActivity() {
         // фильтры
         col.setOnClickListener {
             val newIntent = Intent(this, FiltersActivity::class.java)
-            newIntent.putExtra("imgUri", uri.toString())
+            newIntent.putExtra(this.getString(R.string.imageUri), uri.toString())
+            startActivity(newIntent)
+        }
+
+        // маскирование
+        masking.setOnClickListener {
+            val newIntent = Intent(this, MaskingActivity::class.java)
+            newIntent.putExtra(this.getString(R.string.imageUri), uri.toString())
             startActivity(newIntent)
         }
 
@@ -61,7 +69,7 @@ class ChooseActivity : AppCompatActivity() {
                                 sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
                                 Toast.makeText(
                                     this,
-                                    "Сохранено",
+                                   this.getString(R.string.saved),
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -70,9 +78,9 @@ class ChooseActivity : AppCompatActivity() {
                         }
                     }
                 }
-            builder.setMessage("Сохранить фото в галерею?")
-                .setPositiveButton("Да", dialogOnClickListener)
-                .setNegativeButton("Нет", dialogOnClickListener).show()
+            builder.setMessage(this.getString(R.string.saveQuest))
+                .setPositiveButton(this.getString(R.string.yes), dialogOnClickListener)
+                .setNegativeButton(this.getString(R.string.no), dialogOnClickListener).show()
         }
 
         // "поделиться" полученным изображением
@@ -82,11 +90,11 @@ class ChooseActivity : AppCompatActivity() {
             intent.type = "image/*"
             intent.putExtra(Intent.EXTRA_STREAM, uri)
             try {
-                startActivity(Intent.createChooser(intent, "Отправить с помощью:"))
+                startActivity(Intent.createChooser(intent,this.getString(R.string.share)))
             } catch (e: Exception) {
                 Toast.makeText(
                     this@ChooseActivity,
-                    "Нет приложений, подходящих для отправки",
+                   this.getString(R.string.noApps),
                     Toast.LENGTH_SHORT
                 ).show()
             }

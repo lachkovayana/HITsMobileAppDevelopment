@@ -23,7 +23,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        private const val REQUEST_PERMISSONS = 123
+        private const val REQUEST_PERMISSIONS = 123
         private val PERMISSIONS = arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         private const val PERMISSIONS_COUNT = 2
         private const val REQUEST_PICK_IMAGE = 1234
         private const val REQUEST_IMAGE_CAPTURE = 12345
-        private const val appID = "photoEditor"
     }
 
     private var imageUri: Uri? = null
@@ -51,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             StrictMode.setVmPolicy(builder.build())
         }
 
-        if (!this@MainActivity.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+        if (!this@MainActivity.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
             takePhotoButton.visibility = View.GONE
         }
 
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             intent.type = "image/*"
             val pickIntent = Intent(Intent.ACTION_PICK)
             pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-            val chooserIntent = Intent.createChooser(intent, "Select Image")
+            val chooserIntent = Intent.createChooser(intent,this.getString(R.string.selectImage))
             startActivityForResult(chooserIntent, REQUEST_PICK_IMAGE)
         }
 
@@ -70,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                 //create a file for the photo that was just taken
                 val photoFile = createImageFile()
                 imageUri = Uri.fromFile(photoFile)
-                val myPrefs = getSharedPreferences(appID, 0)
+                val myPrefs = getSharedPreferences(this.getString(R.string.appID), 0)
                 myPrefs.edit().putString("path", photoFile.absolutePath).apply()
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
                 startActivityForResult(
@@ -80,7 +79,7 @@ class MainActivity : AppCompatActivity() {
             } catch (ex: ActivityNotFoundException) {
                 Toast.makeText(
                     this@MainActivity,
-                    "Не поддерживается на Вашем устройстве",
+                   this.getString(R.string.error1),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -95,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         when {
             requestCode == REQUEST_IMAGE_CAPTURE -> {
                 if (imageUri == null) {
-                    val p = getSharedPreferences(appID, 0)
+                    val p = getSharedPreferences(this.getString(R.string.appID), 0)
                     val path = p.getString("path", "")
                     if (path!!.isEmpty()) {
                         recreate()
@@ -116,14 +115,14 @@ class MainActivity : AppCompatActivity() {
         }
         val editIntent = Intent(this@MainActivity, ChooseActivity::class.java)
         val imageToTransfer = imageUri
-        editIntent.putExtra("imgUri", imageToTransfer.toString())
+        editIntent.putExtra(this.getString(R.string.imageUri), imageToTransfer.toString())
         startActivity(editIntent)
     }
 
     override fun onResume() {
         super.onResume()
         if (notPermissions()) {
-            requestPermissions(PERMISSIONS, REQUEST_PERMISSONS)
+            requestPermissions(PERMISSIONS, REQUEST_PERMISSIONS)
         }
     }
 
@@ -133,10 +132,10 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_PERMISSONS && grantResults.isNotEmpty() && notPermissions()) {
+        if (requestCode == REQUEST_PERMISSIONS && grantResults.isNotEmpty() && notPermissions()) {
             Toast.makeText(
                 this,
-                "Редактор не может работать без доступа к Вашим фото. Пожалуйста, выберите 'Разрешить'",
+               this.getString(R.string.onDeny),
                 Toast.LENGTH_LONG
             ).show()
         }
