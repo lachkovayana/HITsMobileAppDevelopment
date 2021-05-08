@@ -11,5 +11,23 @@
     <string name="back">Назад</string>
     <string name="photo_editor">Photo Editor</string>
     <string name="select_image">Выбрать фото</string>
-    <string name="take_photo">Сделать фото</string>
+    <string name="take_photo">Камера</string>
+    <string name="radius">radius</string>
+    <string name="amount">amount</string>
+    <string name="threshold">threshold</string>
+    <string name="change">Изменить</string>
+    <string name="appID">photoEditor</string>
+    <string name="selectImage">Select Image</string>
+    <string name="imageUri">imgUri</string>
+    <string name="onDeny">Редактор не может работать без доступа к Вашим фото. Пожалуйста, выберите "Разрешить"</string>
+    <string name="error1">Не поддерживается на Вашем устройстве</string>
+    <string name="saveQuest">Сохранить фото в галерею?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="share">Отправить с помощью:</string>
+    <string name="noApps">Нет приложений, подходящих для отправки</string>
+    <string name="img">imageUri</string>
+    <string name="saved">Сохранено</string>
+
+
 </resources>
