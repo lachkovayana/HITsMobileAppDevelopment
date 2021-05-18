@@ -23,14 +23,63 @@
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:origin/lachkovayana-actualCode" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="031676b9-b22e-41bb-ac7b-c2291e71e29b" name="Default Changelist" comment="18.05">
-      <change beforePath="$PROJECT_DIR$/PhotoEditorClear/app/.idea/workspace.xml" beforeDir="false" />
+    <list default="true" id="031676b9-b22e-41bb-ac7b-c2291e71e29b" name="Default Changelist" comment="18.05 all actual project">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/androidTest/java/com/example/photoeditor/ExampleInstrumentedTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/java/com/example/photoeditor/EditActivity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/java/com/example/photoeditor/MainActivity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/layout/activity_edit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/navigation/nav_graph.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/values-night/themes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/values/colors.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/values/themes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/test/java/com/example/photoeditor/ExampleUnitTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/local.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChooseActivity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FiltersActivity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainActivity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/activity_choose.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/activity_filters.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/activity_main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/colors.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/greye.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/orige.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rede.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sepe.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/swape.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +102,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -71,7 +121,21 @@
       <option name="project" value="LOCAL" />
       <updated>1621333779794</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="18.05 all actual project">
+      <created>1621333933472</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1621333933472</updated>
+    </task>
+    <task id="LOCAL-00003" summary="18.05 all actual project">
+      <created>1621334048062</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1621334048063</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -79,19 +143,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="origin/lachkovayana-actualCode" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -103,12 +155,12 @@
             <list>
               <RecentGroup>
                 <option name="FILTER_VALUES">
-                  <option value="origin/lachkovayana-actualCode" />
+                  <option value="origin/master" />
                 </option>
               </RecentGroup>
               <RecentGroup>
                 <option name="FILTER_VALUES">
-                  <option value="origin/master" />
+                  <option value="origin/lachkovayana-actualCode" />
                 </option>
               </RecentGroup>
             </list>
@@ -116,9 +168,21 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="18.05" />
-    <option name="LAST_COMMIT_MESSAGE" value="18.05" />
+    <MESSAGE value="18.05 all actual project" />
+    <option name="LAST_COMMIT_MESSAGE" value="18.05 all actual project" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="580" y="187" key="FileChooserDialogImpl" timestamp="1621334680262">
+      <screen x="63" y="0" width="1473" height="864" />
+    </state>
+    <state x="580" y="187" key="FileChooserDialogImpl/63.0.1473.864@63.0.1473.864" timestamp="1621334680262" />
+    <state x="392" y="165" key="Vcs.Push.Dialog.v2" timestamp="1621334050749">
+      <screen x="63" y="0" width="1473" height="864" />
+    </state>
+    <state x="392" y="165" key="Vcs.Push.Dialog.v2/63.0.1473.864@63.0.1473.864" timestamp="1621334050749" />
   </component>
 </project>
