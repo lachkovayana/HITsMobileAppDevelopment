@@ -1,0 +1,66 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/rotationX"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Перемещение по оси X:" />
+
+        <SeekBar
+            android:id="@+id/rotX"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:max="360"
+            android:progress="30" />
+
+        <TextView
+            android:id="@+id/rotationY"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Перемещение по оси Y:" />
+
+        <SeekBar
+            android:id="@+id/rotY"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:max="360"
+            android:progress="30" />
+
+        <TextView
+            android:id="@+id/rotationZ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Перемещение по оси Z:" />
+
+        <SeekBar
+            android:id="@+id/rotZ"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:max="360"
+            android:progress="30" />
+
+        <com.example.cube3dtry.MyView
+            style="@style/Widget.Theme.Cube3dTry.MyView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minWidth="350dp"
+            android:minHeight="350dp"
+            app:exampleDimension="24sp"
+            app:exampleDrawable="@android:drawable/ic_menu_add"
+            app:exampleString="Hello, MyView" />
+    </LinearLayout>
+</FrameLayout>
