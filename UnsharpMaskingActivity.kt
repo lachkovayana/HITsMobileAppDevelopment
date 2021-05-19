@@ -1,17 +1,5 @@
 package com.example.photoeditor
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
-
-package com.example.photoeditor
-
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -19,10 +7,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
+import android.widget.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -62,25 +47,39 @@ class UnsharpMaskingActivity : AppCompatActivity() {
         bitmapBefore = bitmap
         finalBitmap = bitmap
 
+        // кнопка запуска алгоритма
         changeButton.setOnClickListener {
-            val amount = amountEditText.text.toString().toDouble()
-            val radius = radiusEditText.text.toString().toDouble()
-            val threshold = thresholdEditText.text.toString().toDouble()
+            val amount = amountEditText.text.toString().toDoubleOrNull()
+            val radius = radiusEditText.text.toString().toDoubleOrNull()
+            val threshold = thresholdEditText.text.toString().toIntOrNull()
+            when {
+                amount == null || radius == null || threshold == null -> {
+                    Toast.makeText(this, "Введите корректные данные", Toast.LENGTH_SHORT).show()
+                }
+                amount < 0 || amount > 1 || threshold <= 0 || radius <= 0 -> {
+                    Toast.makeText(this, "Введите корректные данные", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    unsharpMasking(radius, threshold, amount)
+                }
+            }
 
-            unsharpMasking(radius, threshold, amount)
         }
 
+        // кнопка отмены изменений
         returnBackButton.setOnClickListener {
             imageView.setImageBitmap(bitmapBefore)
-            finalBitmap = bitmapBefore.also { bitmapBefore = finalBitmap }
+            finalBitmap = bitmapBefore
         }
 
+        // кнопка возвращения без сохранения
         backButton.setOnClickListener {
             val editIntent = Intent(this, ChooseActivity::class.java)
             editIntent.putExtra("imgUri", uri.toString())
             startActivity(editIntent)
         }
 
+        // сохранения и перехода на другую страницу
         applyButton.setOnClickListener {
             val outFile = createImageFile()
             try {
@@ -97,24 +96,21 @@ class UnsharpMaskingActivity : AppCompatActivity() {
         }
     }
 
-    private fun unsharpMasking(radius: Double, threshold: Double, amount: Double){
+    private fun unsharpMasking(radius: Double, threshold: Int, amount: Double){
         val width = bitmap.width
-        println(width)
         val height = bitmap.height
-        println(height)
+
         val firstPixels = IntArray(width * height)
-        val secondPixels = IntArray(width * height)
-        val contrastPixels = IntArray(width * height)
+        val blurPixels = IntArray(width * height)
         val maskPixels = IntArray(width * height)
         val resultPixels = IntArray(width * height)
+
         bitmap.getPixels(firstPixels, 0, width, 0, 0, width, height)
         val imageMask = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
 
-
-        gaussianBlur(firstPixels, secondPixels, width, radius)
-        maskCreation(firstPixels, secondPixels, maskPixels)
-        increaseContrast(firstPixels, maskPixels, contrastPixels, amount, threshold)
-        comparison(firstPixels, secondPixels, maskPixels, contrastPixels, resultPixels, threshold)
+        gaussianBlur(firstPixels, blurPixels, width, height, radius)
+        maskCreation(firstPixels, blurPixels, maskPixels)
+        maskApplication(firstPixels, maskPixels, resultPixels, amount, threshold)
 
         imageMask.setPixels(resultPixels, 0, width, 0, 0, width, height);
         imageView.setImageBitmap(imageMask)
@@ -122,21 +118,22 @@ class UnsharpMaskingActivity : AppCompatActivity() {
         finalBitmap = imageMask
     }
 
-    private fun gaussianBlur(first: IntArray, second: IntArray, width: Int, radius: Double) {
+    // функция размытия
+    private fun gaussianBlur(first: IntArray, blur: IntArray, width: Int, height: Int, radius: Double) {
         var numberString = 0
-        for (i in first.indices) {
-            var r = 0
-            var g = 0
-            var b = 0
-            var numberRGB = 0
+        var r = 0
+        var g = 0
+        var b = 0
+        var numberRGB = 0
 
+        for (i in first.indices) {
 
             if (i % width == 0) {
                 numberString += 1
             }
 
-            //размытие строки
             for (j in 0..radius.toInt()) {
+                // размытие строки
                 if (i + j < numberString * width) {
                     r += (first[i + j] and 0x00FF0000 shr 16)
                     g += (first[i + j] and 0x0000FF00 shr 8)
@@ -150,35 +147,81 @@ class UnsharpMaskingActivity : AppCompatActivity() {
                     b += (first[i - j] and 0x000000FF)
                     numberRGB += 1
                 }
+                // размытие столбца
+                if (i + j * width < height * width) {
+                    r += (first[i + j * width] and 0x00FF0000 shr 16)
+                    g += (first[i + j * width] and 0x0000FF00 shr 8)
+                    b += (first[i + j * width] and 0x000000FF)
+                    numberRGB += 1
+                }
 
+                if (i - j * width >= 0) {
+                    r += (first[i - j * width] and 0x00FF0000 shr 16)
+                    g += (first[i - j * width] and 0x0000FF00 shr 8)
+                    b += (first[i - j * width] and 0x000000FF)
+                    numberRGB += 1
+                }
             }
 
             r /= numberRGB
             g /= numberRGB
             b /= numberRGB
-            second[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
+
+            blur[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
+
+            r = 0
+            g = 0
+            b = 0
+            numberRGB = 0
         }
+
     }
 
-    private fun maskCreation (first: IntArray, second: IntArray, mask: IntArray){
+    // функция создания маски
+    private fun maskCreation(first: IntArray, blur: IntArray, mask: IntArray){
         for (i in first.indices) {
             var rFirst = (first[i] and 0x00FF0000 shr 16)
             var gFirst = (first[i] and 0x0000FF00 shr 8)
             var bFirst = (first[i] and 0x000000FF)
 
-            var rSecond = (second[i] and 0x00FF0000 shr 16)
-            var gSecond = (second[i] and 0x0000FF00 shr 8)
-            var bSecond = (second[i] and 0x000000FF)
+            var rBlur = (blur[i] and 0x00FF0000 shr 16)
+            var gBlur = (blur[i] and 0x0000FF00 shr 8)
+            var bBlur = (blur[i] and 0x000000FF)
 
-            var rMask = rFirst - rSecond
-            var gMask = gFirst - gSecond
-            var bMask = bFirst - bSecond
+            var rMask = rFirst - rBlur
+            var gMask = gFirst - gBlur
+            var bMask = bFirst - bBlur
+
+            //rMask = pixelCheck(rMask)
+            //gMask = pixelCheck(gMask)
+            //bMask = pixelCheck(bMask)
+
+            if (rMask < 0) {
+                rMask = 0
+            }
+            if (gMask < 0) {
+                gMask = 0
+            }
+            if (bMask < 0) {
+                bMask = 0
+            }
+
+            if (rMask > 255) {
+                rMask = 255
+            }
+            if (gMask > 255) {
+                gMask = 255
+            }
+            if (bMask > 255) {
+                bMask = 255
+            }
 
             mask[i] = -0x1000000 or (rMask shl 16) or (gMask shl 8) or bMask
         }
     }
 
-    private fun increaseContrast (first: IntArray, mask: IntArray, contrast: IntArray, amount: Double, threshold: Double )
+    // функция примения маски
+    private fun maskApplication(first: IntArray, mask: IntArray, result: IntArray, amount: Double, threshold: Int)
     {
         for (i in first.indices) {
             var rFirst = (first[i] and 0x00FF0000 shr 16)
@@ -189,65 +232,56 @@ class UnsharpMaskingActivity : AppCompatActivity() {
             var gMask = (mask[i] and 0x0000FF00 shr 8)
             var bMask = (mask[i] and 0x000000FF)
 
-            var brightness = (0.2126 * rMask + 0.7152 * gMask + 0.0722 * bMask)/100
-            if (brightness > threshold) {
-                var helper = rFirst
-                rFirst = (rFirst * amount).toInt()
-                if (rFirst > 255) {
-                    rFirst = helper
-                }
+            var r = 0
+            var g = 0
+            var b = 0
 
-                helper = gFirst
-                gFirst = (gFirst * amount).toInt()
-                if (gFirst > 255) {
-                    gFirst = helper
-                }
+            var brightness = (0.2126 * rMask + 0.7152 * gMask + 0.0722 * bMask)
 
-                helper = bFirst
-                bFirst = (bFirst * amount).toInt()
-                if (bFirst > 255) {
-                    bFirst = helper
+            when {
+                brightness > threshold -> {
+                    r = rFirst + (amount*rMask).toInt()
+                    g = gFirst + (amount*gMask).toInt()
+                    b = bFirst + (amount*bMask).toInt()
+
+                    //r = pixelCheck(r)
+                    //g = pixelCheck(g)
+                    //b = pixelCheck(b)
+                    if (r > 255) {
+                        r = 255
+                    }
+                    if (g > 255) {
+                        g = 255
+                    }
+                    if (b > 255) {
+                        b = 255
+                    }
+
+                    if (r < 0) {
+                        r = 0
+                    }
+                    if (g < 0) {
+                        g = 0
+                    }
+                    if (b < 0) {
+                        b = 0
+                    }
+                }
+                else -> {
+                    r = rFirst
+                    g = gFirst
+                    b = bFirst
                 }
             }
-            contrast[i] = -0x1000000 or (rFirst shl 16) or (gFirst shl 8) or bFirst
+            result[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
         }
     }
 
-    private fun comparison(first: IntArray, second: IntArray, mask: IntArray, contrast: IntArray, result: IntArray, threshold: Double)
-    {
-        for (i in first.indices) {
-            var rFirst = (first[i] and 0x00FF0000 shr 16)
-            var gFirst = (first[i] and 0x0000FF00 shr 8)
-            var bFirst = (first[i] and 0x000000FF)
-
-
-            var rMask = (mask[i] and 0x00FF0000 shr 16)
-            var gMask = (mask[i] and 0x0000FF00 shr 8)
-            var bMask = (mask[i] and 0x000000FF)
-
-            var brightness = (0.2126 * rMask + 0.7152 * gMask + 0.0722 * bMask)/100
-            //println(brightness)
-
-            var rContrast = (contrast[i] and 0x00FF0000 shr 16)
-            var gContrast = (contrast[i] and 0x0000FF00 shr 8)
-            var bContrast = (contrast[i] and 0x000000FF)
-
-            rContrast = (rFirst - rContrast)
-            gContrast = (gFirst - gContrast)
-            bContrast = (bFirst - bContrast)
-
-            //println(rContrast)
-            //println(gContrast)
-            //println(bContrast)
-
-            if (brightness > threshold)
-            {
-                result[i] =-0x1000000 or (rContrast shl 16) or (gContrast shl 8) or bContrast
-            }
-            else{
-                result[i] = -0x1000000 or (rFirst shl 16) or (gFirst shl 8) or bFirst
-            }
-        }
+    private fun pixelCheck(pixel: Int): Int {
+        var resultPixel = 0
+        if (pixel > 255) resultPixel = 255
+        if (pixel < 0) resultPixel = 0
+        return (resultPixel)
     }
 
     private fun createImageFile(): File {
