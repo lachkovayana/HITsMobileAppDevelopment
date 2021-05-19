@@ -20,7 +20,6 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp">
 
-
             <Button
                 android:id="@+id/backButton"
                 android:layout_width="0dp"
@@ -70,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginLeft="-388dp"
-                android:hint="amount"
+                android:hint="эффект"
                 android:layout_marginTop="100dp"/>
 
             <EditText
@@ -79,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginLeft="10dp"
-                android:hint="radius"
+                android:hint="радиус"
                 android:layout_marginTop="100dp"/>
 
             <EditText
@@ -88,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginLeft="10dp"
-                android:hint="threshold"
+                android:hint="порог"
                 android:layout_marginTop="100dp"/>
 
         </LinearLayout>
