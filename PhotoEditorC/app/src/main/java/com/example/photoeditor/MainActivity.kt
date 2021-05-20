@@ -26,9 +26,10 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_PERMISSIONS = 123
         private val PERMISSIONS = arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
         )
-        private const val PERMISSIONS_COUNT = 2
+        private const val PERMISSIONS_COUNT = 3
         private const val REQUEST_PICK_IMAGE = 1234
         private const val REQUEST_IMAGE_CAPTURE = 12345
     }

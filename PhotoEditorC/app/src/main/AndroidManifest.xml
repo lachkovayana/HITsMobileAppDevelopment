@@ -29,7 +29,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PhotoEditor">
-        <activity android:name=".MaskingActivity" />
+        <activity
+            android:name=".UnsharpMaskingActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".RotateActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".ScalingActivity"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".CubeActivity"
             android:configChanges="orientation|screenSize" />

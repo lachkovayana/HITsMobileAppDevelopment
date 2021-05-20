@@ -9,6 +9,8 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.photoeditor.databinding.ActivityChooseBinding
+import com.example.photoeditor.databinding.ActivityFiltersBinding
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,25 +23,15 @@ class FiltersActivity : AppCompatActivity() {
     private lateinit var bitmapBefore: Bitmap
     private lateinit var bitmap: Bitmap
     private lateinit var imageView: ImageView
-
+    private lateinit var binding: ActivityFiltersBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_filters)
+        binding = ActivityFiltersBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         init()
     }
 
     private fun init() {
-
-        val applyButton = findViewById<Button>(R.id.applyButton)
-        val returnButton = findViewById<ImageButton>(R.id.returnButton)
-        val returnBackButton = findViewById<ImageButton>(R.id.returnBackButton)
-        val backButton = findViewById<Button>(R.id.backButton)
-        val orig = findViewById<ImageButton>(R.id.original)
-        val firstFilter = findViewById<ImageButton>(R.id.swap)
-        val secondFilter = findViewById<ImageButton>(R.id.grey)
-        val thirdFilter = findViewById<ImageButton>(R.id.sepia)
-        val fourthFilter = findViewById<ImageButton>(R.id.negative)
-        val fifthFilter = findViewById<ImageButton>(R.id.red)
 
         //получение и установка изображения из ChooseActivity
         val uriStr = intent.getStringExtra(this.getString(R.string.imageUri))
@@ -48,49 +40,38 @@ class FiltersActivity : AppCompatActivity() {
         imageView.setImageURI(uri)
         val drawable = imageView.drawable as BitmapDrawable
         bitmap = drawable.bitmap
-//        val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
-//        val inputStream:InputStream = contentResolver.openInputStream(uri)!!
-//        when (ExifInterface(inputStream).getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)) {
-//            ExifInterface.ORIENTATION_ROTATE_90 ->
-//                Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, Matrix().apply { postRotate(90F) }, true)
-//            ExifInterface.ORIENTATION_ROTATE_180 ->
-//                Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, Matrix().apply { postRotate(180F) }, true)
-//            ExifInterface.ORIENTATION_ROTATE_270 ->
-//                Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, Matrix().apply { postRotate(270F) }, true)
-//            else -> bitmap
-//        }
         bitmapBefore = bitmap
         finalBitmap = bitmap
 
         // возвращение к ChooseActivity без сохранения изменений
-        backButton.setOnClickListener {
+        binding.backButton.setOnClickListener {
             val editIntent = Intent(this, ChooseActivity::class.java)
             editIntent.putExtra(this.getString(R.string.imageUri), uri.toString())
             startActivity(editIntent)
         }
 
         // возвращение предыдущего выбранного фильтра
-        returnBackButton.setOnClickListener {
+        binding.returnBackButton.setOnClickListener {
             imageView.setImageBitmap(bitmapBefore)
             val helper = finalBitmap
             finalBitmap = bitmapBefore
             bitmapBefore = helper
-            returnBackButton.isEnabled = false
-            returnButton.isEnabled = true
+            binding.returnBackButton.isEnabled = false
+            binding.returnButton.isEnabled = true
         }
 
         // возвращение последнего выбранного фильтра
-        returnButton.setOnClickListener {
+        binding.returnButton.setOnClickListener {
             imageView.setImageBitmap(bitmapBefore)
             val helper = finalBitmap
             finalBitmap = bitmapBefore
             bitmapBefore = helper
-            returnButton.isEnabled = false
-            returnBackButton.isEnabled = true
+            binding.returnButton.isEnabled = false
+            binding.returnBackButton.isEnabled = true
         }
 
         // применение изменений и возврат на экран выбора действий
-        applyButton.setOnClickListener {
+        binding.applyButton.setOnClickListener {
             val outFile = createImageFile()
             try {
                 FileOutputStream(outFile).use { out ->
@@ -106,29 +87,29 @@ class FiltersActivity : AppCompatActivity() {
         }
 
         // фильтры
-        orig.setOnClickListener {
+        binding.original.setOnClickListener {
             bitmapBefore = finalBitmap
             imageView.setImageBitmap(bitmap)
             finalBitmap = bitmap
         }
 
-        firstFilter.setOnClickListener {
+        binding.swap.setOnClickListener {
             filter(1)
         }
 
-        secondFilter.setOnClickListener {
+        binding.grey.setOnClickListener {
             filter(2)
         }
 
-        thirdFilter.setOnClickListener {
+        binding.sepia.setOnClickListener {
             filter(3)
         }
 
-        fourthFilter.setOnClickListener {
+        binding.negative.setOnClickListener {
             filter(4)
         }
 
-        fifthFilter.setOnClickListener {
+        binding.red.setOnClickListener {
             filter(5)
         }
 

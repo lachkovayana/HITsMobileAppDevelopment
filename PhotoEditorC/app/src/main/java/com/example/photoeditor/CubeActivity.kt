@@ -2,43 +2,35 @@ package com.example.photoeditor
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.SeekBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.math.cos
-import kotlin.math.sin
+import com.example.photoeditor.databinding.ActivityCubeBinding
 
 class CubeActivity : AppCompatActivity() {
-
+    private lateinit var binding: ActivityCubeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.sample_cube)
+        binding = ActivityCubeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         init()
     }
 
     private fun init() {
-        val c = Cube(this)
 
         val uriStr = intent.getStringExtra(getString(R.string.imageUri))
 
-        val backButton = findViewById<Button>(R.id.backButton)
-        backButton.setOnClickListener {
+        binding.backButton.setOnClickListener {
             val intent = Intent(this, ChooseActivity::class.java)
             intent.putExtra(this.getString(R.string.imageUri), uriStr)
             startActivity(intent)
-            c.rotateZ3D(15.0f)
 
         }
-
-        var pr = 0.0f
-        val mt = findViewById<TextView>(R.id.textOfProgress)
-        var oldPr = 0.0f
-        val skBar = findViewById<SeekBar>(R.id.zAxisProgress)
-        skBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        var pr = 0.0
+        var oldPr = 0.0
+        binding.zAxisProgress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                pr = progress.toFloat()
-                mt.text = progress.toString()
+                binding.textOfProgress.text = progress.toString()
+                pr = progress.toDouble()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -46,8 +38,9 @@ class CubeActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                c.rotateZ3Dtheta = oldPr - pr
+                binding.cubeView.rotateZ3D(Math.toRadians(pr-oldPr).toFloat())
             }
         })
+
     }
 }

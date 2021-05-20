@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.photoeditor.databinding.ActivityChooseBinding
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -18,20 +19,16 @@ import java.util.*
 
 
 class ChooseActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityChooseBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_choose)
+        binding = ActivityChooseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         init()
     }
 
     private fun init() {
-        val backButton = findViewById<ImageButton>(R.id.backButton)
-        val masking = findViewById<Button>(R.id.retouch)
-        val col = findViewById<Button>(R.id.COL)
-        val cube = findViewById<Button>(R.id.cube)
-        val saveImageButton = findViewById<ImageButton>(R.id.saveButton)
-        val sharing = findViewById<ImageButton>(R.id.share)
 
         //установка переданного изображения
         val uriStr = intent.getStringExtra(getString(R.string.imageUri))
@@ -39,34 +36,49 @@ class ChooseActivity : AppCompatActivity() {
         val imageView: ImageView = findViewById(R.id.imageViewEdit)
         imageView.setImageURI(uri)
 
+
         // возвращение к экрану выбора фото
-        backButton.setOnClickListener {
+        binding.backButton.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
+        // поворот
+        binding.rotationButton.setOnClickListener {
+            val rotationIntent = Intent(this, RotateActivity::class.java)
+            rotationIntent.putExtra(this.getString(R.string.imageUri), uri.toString())
+            startActivity(rotationIntent)
+        }
+
+        // масштабирование
+        binding.scalingButton.setOnClickListener {
+            val intent = Intent(this, ScalingActivity::class.java)
+            intent.putExtra(this.getString(R.string.imageUri), uri.toString())
+            startActivity(intent)
+        }
+
         // фильтры
-        col.setOnClickListener {
+        binding.colorFiltersButton.setOnClickListener {
             val newIntent = Intent(this, FiltersActivity::class.java)
             newIntent.putExtra(this.getString(R.string.imageUri), uri.toString())
             startActivity(newIntent)
         }
 
         // маскирование
-        masking.setOnClickListener {
-            val newIntent = Intent(this, MaskingActivity::class.java)
+        binding.maskingButton.setOnClickListener {
+            val newIntent = Intent(this, UnsharpMaskingActivity::class.java)
             newIntent.putExtra(this.getString(R.string.imageUri), uri.toString())
             startActivity(newIntent)
         }
 
         // куб
-        cube.setOnClickListener {
+        binding.cubeButton.setOnClickListener {
             val newIntent = Intent(this, CubeActivity::class.java)
             newIntent.putExtra(this.getString(R.string.imageUri), uri.toString())
             startActivity(newIntent)
         }
 
         // сохранение полученного фото
-        saveImageButton.setOnClickListener {
+        binding.saveButton.setOnClickListener {
             val builder = android.app.AlertDialog.Builder(this)
             val outFile = createImageFile()
             val dialogOnClickListener =
@@ -92,7 +104,7 @@ class ChooseActivity : AppCompatActivity() {
         }
 
         // "поделиться" полученным изображением
-        sharing.setOnClickListener {
+        binding.share.setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_SEND
             intent.type = "image/*"

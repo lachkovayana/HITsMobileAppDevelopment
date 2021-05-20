@@ -5,15 +5,11 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import kotlin.math.cos
 import kotlin.math.sin
-import com.example.photoeditor.CubeActivity as CubeActivity
 
 
 class Cube : View {
-    var rotateZ3Dtheta = 50.0f
 
     // Кисть для рисования
     private var paint = Paint().apply {
@@ -25,11 +21,6 @@ class Cube : View {
         strokeJoin = Paint.Join.ROUND // default: MITER
         strokeCap = Paint.Cap.ROUND // default: BUTT
         strokeWidth = 8F // default: Hairline-width (really thin)
-    }
-    private var paint2 = Paint().apply {
-        color = Color.BLUE
-        strokeCap = Paint.Cap.SQUARE // default: BUTT
-        strokeWidth = 393F // default: Hairline-width (really thin)
     }
 
     private var nodes = arrayOf(
@@ -142,14 +133,6 @@ class Cube : View {
             )
         }
 
-//        // Draw nodes
-//        for (element in nodes) {
-//            canvas.drawPoint(element[0], element[1], paint)
-//        }
-
-        // Draw sides
-//        canvas.drawLine(0.0f, 0.0f, -0.0f, 0.0f, paint2)
-
         // Draw numbers
         for (e in edgesPoints.indices) {
             val n0 = edgesPoints[e][0]
@@ -180,6 +163,7 @@ class Cube : View {
             element[0] = (x * cosTheta - y * sinTheta)
             element[1] = (y * cosTheta + x * sinTheta)
         }
+        invalidate()
     }
 
     // Rotate shape around the x-axis

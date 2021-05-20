@@ -29,6 +29,21 @@
     <string name="img">imageUri</string>
     <string name="saved">Сохранено</string>
     <string name="zaxic">Поворот по оси Z</string>
+    <string name="rotate">rotate</string>
+    <string name="scaling">scaling</string>
+    <string name="eff">эффект</string>
+    <string name="rad">радиус</string>
+    <string name="por">порог</string>
+    <string name="changeCoef">Введите коэффициент</string>
+    <string name="_180">-180°</string>
+    <string name="_90">-90°</string>
+    <string name="rotate90">+90°</string>
+    <string name="rotate180">+180°</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_7">7</string>
+    <string name="_9">9</string>
 
 
 </resources>

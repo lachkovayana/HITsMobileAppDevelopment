@@ -20,8 +20,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:background="@color/white"
-                android:tint="@color/black"
-                android:src="?attr/homeAsUpIndicator" />
+                android:src="?attr/homeAsUpIndicator"
+                android:tint="@color/black" />
 
             <TextView
                 android:layout_width="0dp"
@@ -34,16 +34,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:backgroundTint="@color/white"
-                android:tint="@color/black"
-                android:src="?attr/actionModeShareDrawable" />
+                android:src="?attr/actionModeShareDrawable"
+                android:tint="@color/black" />
+
             <ImageButton
                 android:id="@+id/saveButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:backgroundTint="@color/white"
-                android:tint="@color/black"
-                android:src="@android:drawable/stat_sys_download_done" />
+                android:src="@android:drawable/stat_sys_download_done"
+                android:tint="@color/black" />
         </LinearLayout>
 
         <ImageView
@@ -52,51 +53,62 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/help"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="adj" />
+            <HorizontalScrollView
+                android:id="@+id/hscroll"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/COL"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="col" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp">
 
-            <Button
-                android:id="@+id/SPL"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="spl" />
+                    <Button
+                        android:id="@+id/rotationButton"
+                        style="@style/ButtonsChooseStyle"
+                        android:text="@string/_1" />
 
-            <Button
-                android:id="@+id/retouch"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="retouch" />
+                    <Button
+                        android:id="@+id/colorFiltersButton"
+                        style="@style/ButtonsChooseStyle"
+                        android:text="@string/_2" />
 
-            <Button
-                android:id="@+id/cube"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="cube" />
+                    <Button
+                        android:id="@+id/scalingButton"
+                        style="@style/ButtonsChooseStyle"
+                        android:text="@string/_3" />
 
-        </LinearLayout>
+<!--                    <Button-->
+<!--                        android:id="@+id/faceDetectButton"-->
+<!--                        style="@style/ButtonsChooseStyle"-->
+<!--                        android:text="4" />-->
+
+<!--                    <Button-->
+<!--                        android:id="@+id/splineButton"-->
+<!--                        style="@style/ButtonsChooseStyle"-->
+<!--                        android:text="5" />-->
+<!--                    <Button-->
+<!--                        android:id="@+id/retouchButton"-->
+<!--                        style="@style/ButtonsChooseStyle"-->
+<!--                        android:text="6" />-->
+                    <Button
+                        android:id="@+id/maskingButton"
+                        style="@style/ButtonsChooseStyle"
+                        android:text="@string/_7" />
+                    <Button
+                        android:id="@+id/cubeButton"
+                        style="@style/ButtonsChooseStyle"
+                        android:text="@string/_9" />
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
+        </ScrollView>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
