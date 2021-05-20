@@ -51,11 +51,16 @@ class ScalingActivity : AppCompatActivity() {
             val scalingFactor = scalingFactorEditText.text.toString().toDoubleOrNull()
             println(scalingFactor)
             when {
-                scalingFactor == null || (bitmap.width*scalingFactor.toInt()*bitmap.height*scalingFactor.toInt() > maxSize)-> {
+                scalingFactor == null || (bitmap.width*scalingFactor.toInt()*bitmap.height*scalingFactor.toInt() > maxSize) -> {
                     Toast.makeText(this, "Введите корректные данные", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
                     imageScaling (scalingFactor)
+
+                    if (finalBitmap.width != bitmapBefore.width && finalBitmap.height != bitmapBefore.height)
+                    {
+                        Toast.makeText(this, "Алгоритм сработал корректно", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -63,7 +68,7 @@ class ScalingActivity : AppCompatActivity() {
         // кнопка отмены изменений
         returnBackButton.setOnClickListener {
             imageView.setImageBitmap(bitmapBefore)
-            finalBitmap = bitmapBefore.also { bitmapBefore = finalBitmap }
+            finalBitmap = bitmapBefore
         }
 
         // кнопка возвращения без сохранения
@@ -96,11 +101,6 @@ class ScalingActivity : AppCompatActivity() {
         val newWidth = (width*scalingFactor).toInt()
         val newHeight = (height*scalingFactor).toInt()
 
-        /*println(width)
-        println(height)
-        println(newWidth)
-        println(newHeight)*/
-
         val firstPixels = IntArray(width * height)
         val resultPixels = IntArray(newWidth * newHeight)
         val imageMask = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888)
@@ -117,7 +117,7 @@ class ScalingActivity : AppCompatActivity() {
             }
             scalingFactor < 1 -> {
                 // вызов функции уменьшения размера изображения
-                imageReduction(firstPixels, resultPixels, width, newWidth, newHeight, scalingFactor)
+                imageReduction(firstPixels, resultPixels, width, height, newWidth, newHeight, scalingFactor)
                 imageMask.setPixels(resultPixels, 0, newWidth, 0, 0, newWidth, newHeight)
             }
         }
@@ -127,7 +127,7 @@ class ScalingActivity : AppCompatActivity() {
         finalBitmap = imageMask
     }
 
-    private fun imageEnlargement (first: IntArray, result: IntArray, width: Int, newWidth: Int, newHeight: Int, scalingFactor: Double ) {
+    private fun imageEnlargement(first: IntArray, result: IntArray, width: Int, newWidth: Int, newHeight: Int, scalingFactor: Double ) {
         var indexResult = 0
         val helpPixels = IntArray(newWidth * newHeight)
 
@@ -231,61 +231,24 @@ class ScalingActivity : AppCompatActivity() {
         }
     }
 
-    private fun imageReduction (first: IntArray, result: IntArray, width: Int, newWidth: Int, newHeight: Int, scalingFactor: Double ) {
-        var indexResult = 0
-        //var numberPixel = 0
-        var helper = 0
+    private fun imageReduction(first: IntArray, result: IntArray, width: Int, height: Int, newWidth: Int, newHeight: Int, scalingFactor: Double ) {
         val helpPixels = IntArray(newWidth * newHeight)
+        var numberStringFirst = 0
+        var numberStringHelp = 0
+        var indexPixel = 0
+
 
         for (i in helpPixels.indices) {
-            /*
-            when {
-                i % newWidth == 0 && i != 0 -> {
-                    indexResult += width*((width/newWidth).toInt()-1)
-                }
+            numberStringFirst = (numberStringHelp / scalingFactor).toInt()
+            indexPixel = ((i % newWidth) / scalingFactor).toInt() + numberStringFirst * width
+
+            if (i % newWidth == 0 && i != 0) {
+                numberStringHelp += 1
             }
-
-            var r = 0
-            var g = 0
-            var b = 0
-
-            for (j in 1..(width/newWidth).toInt()) {
-                r += (first[indexResult] and 0x00FF0000 shr 16)
-                g += (first[indexResult] and 0x0000FF00 shr 8)
-                b += (first[indexResult] and 0x000000FF)
-                numberPixel += 1
-
-                for (n in 1 until (width/newWidth).toInt()) {
-                    r += (first[indexResult+width*n] and 0x00FF0000 shr 16)
-                    g += (first[indexResult+width*n] and 0x0000FF00 shr 8)
-                    b += (first[indexResult+width*n] and 0x000000FF)
-                    numberPixel += 1
-                }
-                indexResult += 1
-            }
-
-            r /= numberPixel
-            g /= numberPixel
-            b /= numberPixel
+            var r = (first[indexPixel] and 0x00FF0000 shr 16)
+            var g = (first[indexPixel] and 0x0000FF00 shr 8)
+            var b = (first[indexPixel] and 0x000000FF)
             result[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-            numberPixel = 0*/
-
-            if (i % newWidth == 0) {
-                indexResult = width * helper
-                helper += (width/newWidth)
-            }
-
-            //var r = 0
-            //var g = 0
-            //var b = 0
-
-            var r = (first[indexResult] and 0x00FF0000 shr 16)
-            var g = (first[indexResult] and 0x0000FF00 shr 8)
-            var b = (first[indexResult] and 0x000000FF)
-            result[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-
-            indexResult += (width/newWidth)
-
         }
     }
 
@@ -293,7 +256,7 @@ class ScalingActivity : AppCompatActivity() {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val imageFileName = "/JPEG_$timeStamp.jpg"
         val storageDir =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         return File(storageDir.toString() + imageFileName)
     }
 }
