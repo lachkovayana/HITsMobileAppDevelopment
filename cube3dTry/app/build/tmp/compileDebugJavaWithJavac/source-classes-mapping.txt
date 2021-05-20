@@ -1,2 +1,0 @@
-com/example/cube3dtry/BuildConfig.java
- com.example.cube3dtry.BuildConfig
