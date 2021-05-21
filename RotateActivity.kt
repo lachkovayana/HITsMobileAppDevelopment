@@ -32,6 +32,7 @@ class RotateActivity : AppCompatActivity() {
     private fun init() {
         val changeButton = findViewById<Button>(R.id.changeButton)
         val returnBackButton = findViewById<ImageButton>(R.id.returnBackButton)
+        val returnButton = findViewById<ImageButton>(R.id.returnButton)
         val backButton = findViewById<Button>(R.id.backButton)
         val applyButton = findViewById<Button>(R.id.applyButton)
         val mirrorButton = findViewById<Button>(R.id.mirrorButton)
@@ -42,13 +43,13 @@ class RotateActivity : AppCompatActivity() {
         val uri = Uri.parse(uriStr)
         imageView = findViewById(R.id.imageViewEdit)
         imageView.setImageURI(uri)
+        val drawable = imageView.drawable as BitmapDrawable
+        bitmap = drawable.bitmap
+        bitmapBefore = bitmap
+        finalBitmap = bitmap
 
         // кнопка запуска алгоритма
         changeButton.setOnClickListener {
-            val drawable = imageView.drawable as BitmapDrawable
-            bitmap = drawable.bitmap
-            bitmapBefore = bitmap
-            finalBitmap = bitmap
             val angleRotation = angleRotationEditText.text.toString().toIntOrNull()
             when {
                 angleRotation == null || angleRotation % 90 != 0 -> {
@@ -62,15 +63,18 @@ class RotateActivity : AppCompatActivity() {
 
         // кнопка отзеркаливания изображения
         mirrorButton.setOnClickListener {
-            val drawable = imageView.drawable as BitmapDrawable
-            bitmap = drawable.bitmap
-            bitmapBefore = bitmap
-            finalBitmap = bitmap
             mirrorImage()
         }
 
-        // кнопка отмены последнего изменения
+        // кнопка отмены всех изменения
         returnBackButton.setOnClickListener {
+            imageView.setImageBitmap(bitmap)
+            finalBitmap = bitmap
+            bitmapBefore = bitmap
+        }
+
+        // кнопка отмены последнего изменения
+        returnButton.setOnClickListener {
             imageView.setImageBitmap(bitmapBefore)
             finalBitmap = bitmapBefore
         }
@@ -100,12 +104,12 @@ class RotateActivity : AppCompatActivity() {
     }
 
     private fun imageRotation(angleRotation: Int) {
-        val width = bitmap.width
-        val height = bitmap.height
+        val width = finalBitmap.width
+        val height = finalBitmap.height
         val firstPixels = IntArray(width * height)
         val resultPixels = IntArray(width * height)
 
-        bitmap.getPixels(firstPixels, 0, width, 0, 0, width, height)
+        finalBitmap.getPixels(firstPixels, 0, width, 0, 0, width, height)
 
         var angle = angleRotation
         if (angleRotation < 0) angle += ((-angleRotation / 360) + 1) * 360
@@ -185,12 +189,12 @@ class RotateActivity : AppCompatActivity() {
     }
 
     private fun mirrorImage() {
-        val width = bitmap.width
-        val height = bitmap.height
+        val width = finalBitmap.width
+        val height = finalBitmap.height
         val firstPixels = IntArray(width * height)
         val resultPixels = IntArray(width * height)
 
-        bitmap.getPixels(firstPixels, 0, width, 0, 0, width, height)
+        finalBitmap.getPixels(firstPixels, 0, width, 0, 0, width, height)
         reflection(firstPixels, resultPixels, width, height)
 
         val imageMask = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
