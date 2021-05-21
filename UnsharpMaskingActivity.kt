@@ -56,7 +56,7 @@ class UnsharpMaskingActivity : AppCompatActivity() {
                 amount == null || radius == null || threshold == null -> {
                     Toast.makeText(this, "Введите корректные данные", Toast.LENGTH_SHORT).show()
                 }
-                amount < 0 || amount > 1 || threshold <= 0 || radius <= 0 -> {
+                threshold <= 0 || threshold <= 0 || radius <= 0 -> {
                     Toast.makeText(this, "Введите корректные данные", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
@@ -192,29 +192,12 @@ class UnsharpMaskingActivity : AppCompatActivity() {
             var gMask = gFirst - gBlur
             var bMask = bFirst - bBlur
 
-            //rMask = pixelCheck(rMask)
-            //gMask = pixelCheck(gMask)
-            //bMask = pixelCheck(bMask)
-
-            if (rMask < 0) {
-                rMask = 0
-            }
-            if (gMask < 0) {
-                gMask = 0
-            }
-            if (bMask < 0) {
-                bMask = 0
-            }
-
-            if (rMask > 255) {
-                rMask = 255
-            }
-            if (gMask > 255) {
-                gMask = 255
-            }
-            if (bMask > 255) {
-                bMask = 255
-            }
+            if (rMask > 255) rMask = 255
+            if (gMask > 255) gMask = 255
+            if (bMask > 255) bMask = 255
+            if (rMask < 0) rMask = 0
+            if (gMask < 0) gMask = 0
+            if (bMask < 0) bMask = 0
 
             mask[i] = -0x1000000 or (rMask shl 16) or (gMask shl 8) or bMask
         }
@@ -244,28 +227,12 @@ class UnsharpMaskingActivity : AppCompatActivity() {
                     g = gFirst + (amount*gMask).toInt()
                     b = bFirst + (amount*bMask).toInt()
 
-                    //r = pixelCheck(r)
-                    //g = pixelCheck(g)
-                    //b = pixelCheck(b)
-                    if (r > 255) {
-                        r = 255
-                    }
-                    if (g > 255) {
-                        g = 255
-                    }
-                    if (b > 255) {
-                        b = 255
-                    }
-
-                    if (r < 0) {
-                        r = 0
-                    }
-                    if (g < 0) {
-                        g = 0
-                    }
-                    if (b < 0) {
-                        b = 0
-                    }
+                    if (r > 255) r = 255
+                    if (g > 255) g = 255
+                    if (b > 255) b = 255
+                    if (r < 0) r = 0
+                    if (g < 0) g = 0
+                    if (b < 0) b = 0
                 }
                 else -> {
                     r = rFirst
@@ -275,13 +242,6 @@ class UnsharpMaskingActivity : AppCompatActivity() {
             }
             result[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
         }
-    }
-
-    private fun pixelCheck(pixel: Int): Int {
-        var resultPixel = 0
-        if (pixel > 255) resultPixel = 255
-        if (pixel < 0) resultPixel = 0
-        return (resultPixel)
     }
 
     private fun createImageFile(): File {
