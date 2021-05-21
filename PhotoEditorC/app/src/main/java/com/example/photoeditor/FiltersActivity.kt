@@ -5,11 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.*
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.photoeditor.databinding.ActivityChooseBinding
 import com.example.photoeditor.databinding.ActivityFiltersBinding
 import java.io.*
 import java.text.SimpleDateFormat
@@ -22,7 +18,6 @@ class FiltersActivity : AppCompatActivity() {
     private lateinit var finalBitmap: Bitmap
     private lateinit var bitmapBefore: Bitmap
     private lateinit var bitmap: Bitmap
-    private lateinit var imageView: ImageView
     private lateinit var binding: ActivityFiltersBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +31,8 @@ class FiltersActivity : AppCompatActivity() {
         //получение и установка изображения из ChooseActivity
         val uriStr = intent.getStringExtra(this.getString(R.string.imageUri))
         val uri = Uri.parse(uriStr)
-        imageView = findViewById(R.id.imageViewEdit)
-        imageView.setImageURI(uri)
-        val drawable = imageView.drawable as BitmapDrawable
+        binding.imageViewEdit.setImageURI(uri)
+        val drawable = binding.imageViewEdit.drawable as BitmapDrawable
         bitmap = drawable.bitmap
         bitmapBefore = bitmap
         finalBitmap = bitmap
@@ -52,7 +46,7 @@ class FiltersActivity : AppCompatActivity() {
 
         // возвращение предыдущего выбранного фильтра
         binding.returnBackButton.setOnClickListener {
-            imageView.setImageBitmap(bitmapBefore)
+            binding.imageViewEdit.setImageBitmap(bitmapBefore)
             val helper = finalBitmap
             finalBitmap = bitmapBefore
             bitmapBefore = helper
@@ -62,7 +56,7 @@ class FiltersActivity : AppCompatActivity() {
 
         // возвращение последнего выбранного фильтра
         binding.returnButton.setOnClickListener {
-            imageView.setImageBitmap(bitmapBefore)
+            binding.imageViewEdit.setImageBitmap(bitmapBefore)
             val helper = finalBitmap
             finalBitmap = bitmapBefore
             bitmapBefore = helper
@@ -89,7 +83,7 @@ class FiltersActivity : AppCompatActivity() {
         // фильтры
         binding.original.setOnClickListener {
             bitmapBefore = finalBitmap
-            imageView.setImageBitmap(bitmap)
+            binding.imageViewEdit.setImageBitmap(bitmap)
             finalBitmap = bitmap
         }
 
@@ -131,7 +125,7 @@ class FiltersActivity : AppCompatActivity() {
             5 -> red(srcPixels, destPixels)
         }
         bmDublicated.setPixels(destPixels, 0, width, 0, 0, width, height)
-        imageView.setImageBitmap(bmDublicated)
+        binding.imageViewEdit.setImageBitmap(bmDublicated)
         bitmapBefore = finalBitmap
         finalBitmap = bmDublicated
         val photoFile = createImageFile()

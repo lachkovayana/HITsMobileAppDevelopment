@@ -85,7 +85,7 @@
 <!--                    <Button-->
 <!--                        android:id="@+id/faceDetectButton"-->
 <!--                        style="@style/ButtonsChooseStyle"-->
-<!--                        android:text="4" />-->
+<!--                        android:text="@string/_4" />-->
 
 <!--                    <Button-->
 <!--                        android:id="@+id/splineButton"-->

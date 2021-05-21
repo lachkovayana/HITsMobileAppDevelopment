@@ -33,8 +33,7 @@ class ChooseActivity : AppCompatActivity() {
         //установка переданного изображения
         val uriStr = intent.getStringExtra(getString(R.string.imageUri))
         val uri = Uri.parse(uriStr)
-        val imageView: ImageView = findViewById(R.id.imageViewEdit)
-        imageView.setImageURI(uri)
+        binding.imageViewEdit.setImageURI(uri)
 
 
         // возвращение к экрану выбора фото
