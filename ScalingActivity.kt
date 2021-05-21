@@ -106,157 +106,129 @@ class ScalingActivity : AppCompatActivity() {
         val imageMask = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888)
 
         bitmap.getPixels(firstPixels, 0, width, 0, 0, width, height)
-        when {
-            scalingFactor > 1 -> {
-                // вызов функции увеличение размера изображения
-                imageEnlargement(firstPixels, resultPixels, width, newWidth, newHeight, scalingFactor)
-                imageMask.setPixels(resultPixels, 0, newWidth, 0, 0, newWidth, newHeight)
-            }
-            scalingFactor.toInt() == 1 -> {
-                imageMask.setPixels(firstPixels, 0, newWidth, 0, 0, newWidth, newHeight)
-            }
-            scalingFactor < 1 -> {
-                // вызов функции уменьшения размера изображения
-                imageReduction(firstPixels, resultPixels, width, height, newWidth, newHeight, scalingFactor)
-                imageMask.setPixels(resultPixels, 0, newWidth, 0, 0, newWidth, newHeight)
-            }
-        }
+
+        changeSize(firstPixels, resultPixels, width, newWidth, newHeight, scalingFactor)
+        imageMask.setPixels(resultPixels, 0, newWidth, 0, 0, newWidth, newHeight)
 
         imageView.setImageBitmap(imageMask)
         bitmapBefore = finalBitmap
         finalBitmap = imageMask
     }
 
-    private fun imageEnlargement(first: IntArray, result: IntArray, width: Int, newWidth: Int, newHeight: Int, scalingFactor: Double ) {
-        var indexResult = 0
-        val helpPixels = IntArray(newWidth * newHeight)
-
-        for (i in first.indices) {
-            when {
-                i % width == 0 && i != 0 -> {
-                    indexResult += newWidth*(scalingFactor.toInt()-1)
-                }
-            }
-
-            var r = (first[i] and 0x00FF0000 shr 16)
-            var g = (first[i] and 0x0000FF00 shr 8)
-            var b = (first[i] and 0x000000FF)
-
-            for (j in 1..scalingFactor.toInt()) {
-                helpPixels[indexResult] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                for (n in 1 until scalingFactor.toInt()) {
-                    helpPixels[indexResult+newWidth*n] = -0x1000000 or (r shl 16) or (g shl 8) or b
-                }
-                indexResult += 1
-            }
-        }
-
-        var helpNumber = 0
-        for (i in helpPixels.indices) {
-            when (i) {
-                newWidth -> {
-                    helpNumber = 1
-                }
-                newWidth*(newHeight-1) -> {
-                    helpNumber = 2
-                }
-            }
-
-            var r = 0
-            var g = 0
-            var b = 0
-
-            when {
-                i % newWidth == 0 -> {
-                    when (helpNumber) {
-                        0 -> {
-                            r = (helpPixels[i+newWidth+1] and 0x00FF0000 shr 16)
-                            g = (helpPixels[i+newWidth+1] and 0x0000FF00 shr 8)
-                            b = (helpPixels[i+newWidth+1] and 0x000000FF)
-                        }
-                        2 -> {
-                            r = (helpPixels[i-newWidth+1] and 0x00FF0000 shr 16)
-                            g = (helpPixels[i-newWidth+1] and 0x0000FF00 shr 8)
-                            b = (helpPixels[i-newWidth+1] and 0x000000FF)
-                        }
-                        else -> {
-                            r = ((helpPixels[i+newWidth+1] and 0x00FF0000 shr 16)+(helpPixels[i-newWidth+1] and 0x00FF0000 shr 16))/2
-                            g = ((helpPixels[i+newWidth+1] and 0x0000FF00 shr 8)+(helpPixels[i-newWidth+1] and 0x0000FF00 shr 8))/2
-                            b = ((helpPixels[i+newWidth+1] and 0x000000FF)+(helpPixels[i-newWidth+1] and 0x000000FF))/2
-                        }
-                    }
-                }
-                i % newWidth == newWidth-1 -> {
-                    when (helpNumber) {
-                        0 -> {
-                            r = (helpPixels[i+newWidth-1] and 0x00FF0000 shr 16)
-                            g = (helpPixels[i+newWidth-1] and 0x0000FF00 shr 8)
-                            b = (helpPixels[i+newWidth-1] and 0x000000FF)
-                        }
-                        2 -> {
-                            r = (helpPixels[i-newWidth-1] and 0x00FF0000 shr 16)
-                            g = (helpPixels[i-newWidth-1] and 0x0000FF00 shr 8)
-                            b = (helpPixels[i-newWidth-1] and 0x000000FF)
-                        }
-                        else -> {
-                            r = ((helpPixels[i+newWidth-1] and 0x00FF0000 shr 16)+(helpPixels[i-newWidth-1] and 0x00FF0000 shr 16))/2
-                            g = ((helpPixels[i+newWidth-1] and 0x0000FF00 shr 8)+(helpPixels[i-newWidth-1] and 0x0000FF00 shr 8))/2
-                            b = ((helpPixels[i+newWidth-1] and 0x000000FF)+(helpPixels[i-newWidth-1] and 0x000000FF))/2
-                        }
-                    }
-                }
-                else -> {
-                    when (helpNumber) {
-                        0 -> {
-                            r = ((helpPixels[i+newWidth+1] and 0x00FF0000 shr 16)+(helpPixels[i+newWidth-1] and 0x00FF0000 shr 16))/2
-                            g = ((helpPixels[i+newWidth+1] and 0x0000FF00 shr 8)+(helpPixels[i+newWidth-1] and 0x0000FF00 shr 8))/2
-                            b = ((helpPixels[i+newWidth+1] and 0x000000FF)+(helpPixels[i+newWidth-1] and 0x000000FF))/2
-                        }
-                        2 -> {
-                            r = ((helpPixels[i-newWidth+1] and 0x00FF0000 shr 16)+(helpPixels[i-newWidth-1] and 0x00FF0000 shr 16))/2
-                            g = ((helpPixels[i-newWidth+1] and 0x0000FF00 shr 8)+(helpPixels[i-newWidth-1] and 0x0000FF00 shr 8))/2
-                            b = ((helpPixels[i-newWidth+1] and 0x000000FF)+(helpPixels[i-newWidth-1] and 0x000000FF))/2
-                        }
-                        else -> {
-                            r = ((helpPixels[i+newWidth+1] and 0x00FF0000 shr 16)+(helpPixels[i+newWidth-1] and 0x00FF0000 shr 16)+(helpPixels[i-newWidth+1] and 0x00FF0000 shr 16)+(helpPixels[i-newWidth-1] and 0x00FF0000 shr 16))/4
-                            g = ((helpPixels[i+newWidth+1] and 0x0000FF00 shr 8)+(helpPixels[i+newWidth-1] and 0x0000FF00 shr 8)+(helpPixels[i-newWidth+1] and 0x0000FF00 shr 8)+(helpPixels[i-newWidth-1] and 0x0000FF00 shr 8))/4
-                            b = ((helpPixels[i+newWidth+1] and 0x000000FF)+(helpPixels[i+newWidth-1] and 0x000000FF)+(helpPixels[i-newWidth+1] and 0x000000FF)+(helpPixels[i-newWidth-1] and 0x000000FF))/4
-                        }
-                    }
-                }
-            }
-
-            result[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
-
-        }
-    }
-
-    private fun imageReduction(first: IntArray, result: IntArray, width: Int, height: Int, newWidth: Int, newHeight: Int, scalingFactor: Double ) {
-        val helpPixels = IntArray(newWidth * newHeight)
+    private fun changeSize(first: IntArray, result: IntArray, width: Int, newWidth: Int, newHeight: Int, scalingFactor: Double) {
         var numberStringFirst = 0
         var numberStringHelp = 0
         var indexPixel = 0
+        val helpPixels = IntArray(newWidth * newHeight)
 
-
-        for (i in helpPixels.indices) {
+        for (i in result.indices) {
             numberStringFirst = (numberStringHelp / scalingFactor).toInt()
             indexPixel = ((i % newWidth) / scalingFactor).toInt() + numberStringFirst * width
 
             if (i % newWidth == 0 && i != 0) {
                 numberStringHelp += 1
             }
+
             var r = (first[indexPixel] and 0x00FF0000 shr 16)
             var g = (first[indexPixel] and 0x0000FF00 shr 8)
             var b = (first[indexPixel] and 0x000000FF)
-            result[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
+            helpPixels[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
+        }
+
+        if (scalingFactor > 3) {
+            var helpNumber = 0
+            for (i in helpPixels.indices) {
+                when (i) {
+                    newWidth -> {
+                        helpNumber = 1
+                    }
+                    newWidth * (newHeight - 1) -> {
+                        helpNumber = 2
+                    }
+                }
+
+                var r = 0
+                var g = 0
+                var b = 0
+
+                when {
+                    i % newWidth == 0 -> {
+                        when (helpNumber) {
+                            0 -> {
+                                r = (helpPixels[i + newWidth + 1] and 0x00FF0000 shr 16)
+                                g = (helpPixels[i + newWidth + 1] and 0x0000FF00 shr 8)
+                                b = (helpPixels[i + newWidth + 1] and 0x000000FF)
+                            }
+                            2 -> {
+                                r = (helpPixels[i - newWidth + 1] and 0x00FF0000 shr 16)
+                                g = (helpPixels[i - newWidth + 1] and 0x0000FF00 shr 8)
+                                b = (helpPixels[i - newWidth + 1] and 0x000000FF)
+                            }
+                            else -> {
+                                r = ((helpPixels[i + newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth + 1] and 0x00FF0000 shr 16)) / 2
+                                g = ((helpPixels[i + newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth + 1] and 0x0000FF00 shr 8)) / 2
+                                b = ((helpPixels[i + newWidth + 1] and 0x000000FF) + (helpPixels[i - newWidth + 1] and 0x000000FF)) / 2
+                            }
+                        }
+                    }
+                    i % newWidth == newWidth - 1 -> {
+                        when (helpNumber) {
+                            0 -> {
+                                r = (helpPixels[i + newWidth - 1] and 0x00FF0000 shr 16)
+                                g = (helpPixels[i + newWidth - 1] and 0x0000FF00 shr 8)
+                                b = (helpPixels[i + newWidth - 1] and 0x000000FF)
+                            }
+                            2 -> {
+                                r = (helpPixels[i - newWidth - 1] and 0x00FF0000 shr 16)
+                                g = (helpPixels[i - newWidth - 1] and 0x0000FF00 shr 8)
+                                b = (helpPixels[i - newWidth - 1] and 0x000000FF)
+                            }
+                            else -> {
+                                r = ((helpPixels[i + newWidth - 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth - 1] and 0x00FF0000 shr 16)) / 2
+                                g = ((helpPixels[i + newWidth - 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth - 1] and 0x0000FF00 shr 8)) / 2
+                                b = ((helpPixels[i + newWidth - 1] and 0x000000FF) + (helpPixels[i - newWidth - 1] and 0x000000FF)) / 2
+                            }
+                        }
+                    }
+                    else -> {
+                        when (helpNumber) {
+                            0 -> {
+                                r = ((helpPixels[i + newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i + newWidth - 1] and 0x00FF0000 shr 16)) / 2
+                                g = ((helpPixels[i + newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i + newWidth - 1] and 0x0000FF00 shr 8)) / 2
+                                b = ((helpPixels[i + newWidth + 1] and 0x000000FF) + (helpPixels[i + newWidth - 1] and 0x000000FF)) / 2
+                            }
+                            2 -> {
+                                r = ((helpPixels[i - newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth - 1] and 0x00FF0000 shr 16)) / 2
+                                g = ((helpPixels[i - newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth - 1] and 0x0000FF00 shr 8)) / 2
+                                b = ((helpPixels[i - newWidth + 1] and 0x000000FF) + (helpPixels[i - newWidth - 1] and 0x000000FF)) / 2
+                            }
+                            else -> {
+                                r = ((helpPixels[i + newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i + newWidth - 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth - 1] and 0x00FF0000 shr 16)) / 4
+                                g = ((helpPixels[i + newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i + newWidth - 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth - 1] and 0x0000FF00 shr 8)) / 4
+                                b = ((helpPixels[i + newWidth + 1] and 0x000000FF) + (helpPixels[i + newWidth - 1] and 0x000000FF) + (helpPixels[i - newWidth + 1] and 0x000000FF) + (helpPixels[i - newWidth - 1] and 0x000000FF)) / 4
+                            }
+                        }
+                    }
+                }
+                result[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
+            }
+        }
+        else {
+            for (i in helpPixels.indices) {
+                var r = (helpPixels[i] and 0x00FF0000 shr 16)
+                var g = (helpPixels[i] and 0x0000FF00 shr 8)
+                var b = (helpPixels[i] and 0x000000FF)
+                result[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
+            }
         }
     }
+    
 
     private fun createImageFile(): File {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val imageFileName = "/JPEG_$timeStamp.jpg"
         val storageDir =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         return File(storageDir.toString() + imageFileName)
     }
 }
