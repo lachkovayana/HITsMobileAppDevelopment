@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.widget.*
-import com.example.photoeditor.databinding.ActivityChooseBinding
 import com.example.photoeditor.databinding.ActivityUnsharpMaskingBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -20,7 +19,6 @@ class UnsharpMaskingActivity : AppCompatActivity() {
     private lateinit var finalBitmap: Bitmap
     private lateinit var bitmapBefore: Bitmap
     private lateinit var bitmap: Bitmap
-    private lateinit var imageView: ImageView
     private lateinit var binding: ActivityUnsharpMaskingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +60,7 @@ class UnsharpMaskingActivity : AppCompatActivity() {
 
         // кнопка отмены изменений
         binding.returnBackButton.setOnClickListener {
-            imageView.setImageBitmap(bitmapBefore)
+            binding.imageViewEdit.setImageBitmap(bitmapBefore)
             finalBitmap = bitmapBefore
         }
 
@@ -107,7 +105,7 @@ class UnsharpMaskingActivity : AppCompatActivity() {
         maskApplication(firstPixels, maskPixels, resultPixels, amount, threshold)
 
         imageMask.setPixels(resultPixels, 0, width, 0, 0, width, height)
-        imageView.setImageBitmap(imageMask)
+        binding.imageViewEdit.setImageBitmap(imageMask)
         bitmapBefore = finalBitmap
         finalBitmap = imageMask
     }
