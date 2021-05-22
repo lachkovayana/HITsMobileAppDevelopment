@@ -13,10 +13,8 @@ import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.provider.MediaStore
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.photoeditor.databinding.ActivityChooseBinding
 import com.example.photoeditor.databinding.ActivityMainBinding
 import java.io.*
 import java.text.SimpleDateFormat
@@ -67,7 +65,6 @@ class MainActivity : AppCompatActivity() {
         binding.takePhotoButton.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             try {
-                //create a file for the photo that was just taken
                 val photoFile = createImageFile()
                 imageUri = Uri.fromFile(photoFile)
                 val myPrefs = getSharedPreferences(this.getString(R.string.appID), 0)
