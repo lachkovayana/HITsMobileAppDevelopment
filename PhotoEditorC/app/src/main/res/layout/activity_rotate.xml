@@ -25,12 +25,11 @@
                 android:id="@+id/returnBackButton"
                 style="@style/ImageReturnButtonStyle"
                 android:backgroundTint="@color/white"
-                android:src="@android:drawable/ic_menu_revert" />
+                android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
             <ImageButton
                 android:id="@+id/returnButton"
                 style="@style/ImageReturnButtonStyle"
-                android:rotation="180"
                 android:src="@android:drawable/ic_menu_revert" />
 
             <Button

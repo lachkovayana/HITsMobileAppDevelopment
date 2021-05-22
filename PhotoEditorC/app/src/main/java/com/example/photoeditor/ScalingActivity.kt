@@ -20,7 +20,6 @@ class ScalingActivity : AppCompatActivity() {
     private lateinit var finalBitmap: Bitmap
     private lateinit var bitmapBefore: Bitmap
     private lateinit var bitmap: Bitmap
-    private lateinit var imageView: ImageView
     private lateinit var binding: ActivityScalingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +62,7 @@ class ScalingActivity : AppCompatActivity() {
 
         // кнопка отмены изменений
         binding.returnBackButton.setOnClickListener {
-            imageView.setImageBitmap(bitmapBefore)
+            binding.imageViewEdit.setImageBitmap(bitmapBefore)
             finalBitmap = bitmapBefore
         }
 
@@ -106,7 +105,7 @@ class ScalingActivity : AppCompatActivity() {
         changeSize(firstPixels, resultPixels, width, newWidth, newHeight, scalingFactor)
         imageMask.setPixels(resultPixels, 0, newWidth, 0, 0, newWidth, newHeight)
 
-        imageView.setImageBitmap(imageMask)
+        binding.imageViewEdit.setImageBitmap(imageMask)
         bitmapBefore = finalBitmap
         finalBitmap = imageMask
     }
