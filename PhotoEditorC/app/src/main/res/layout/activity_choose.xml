@@ -16,12 +16,8 @@
 
             <ImageButton
                 android:id="@+id/backButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="6"
-                android:background="@color/white"
-                android:src="?attr/homeAsUpIndicator"
-                android:tint="@color/black" />
+                style="@style/ButtonsBackStyle"
+                android:src="?attr/homeAsUpIndicator" />
 
             <TextView
                 android:layout_width="0dp"
@@ -30,21 +26,13 @@
 
             <ImageButton
                 android:id="@+id/share"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="6"
-                android:backgroundTint="@color/white"
-                android:src="?attr/actionModeShareDrawable"
-                android:tint="@color/black" />
+                style="@style/ButtonsBackStyle"
+                android:src="?attr/actionModeShareDrawable" />
 
             <ImageButton
                 android:id="@+id/saveButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="6"
-                android:backgroundTint="@color/white"
-                android:src="@android:drawable/stat_sys_download_done"
-                android:tint="@color/black" />
+                style="@style/ButtonsBackStyle"
+                android:src="@android:drawable/stat_sys_download_done" />
         </LinearLayout>
 
         <ImageView
@@ -82,23 +70,24 @@
                         style="@style/ButtonsChooseStyle"
                         android:text="@string/_3" />
 
-<!--                    <Button-->
-<!--                        android:id="@+id/faceDetectButton"-->
-<!--                        style="@style/ButtonsChooseStyle"-->
-<!--                        android:text="@string/_4" />-->
+                    <!--                    <Button-->
+                    <!--                        android:id="@+id/faceDetectButton"-->
+                    <!--                        style="@style/ButtonsChooseStyle"-->
+                    <!--                        android:text="@string/_4" />-->
 
-<!--                    <Button-->
-<!--                        android:id="@+id/splineButton"-->
-<!--                        style="@style/ButtonsChooseStyle"-->
-<!--                        android:text="5" />-->
-<!--                    <Button-->
-<!--                        android:id="@+id/retouchButton"-->
-<!--                        style="@style/ButtonsChooseStyle"-->
-<!--                        android:text="6" />-->
+                    <!--                    <Button-->
+                    <!--                        android:id="@+id/splineButton"-->
+                    <!--                        style="@style/ButtonsChooseStyle"-->
+                    <!--                        android:text="5" />-->
+                    <!--                    <Button-->
+                    <!--                        android:id="@+id/retouchButton"-->
+                    <!--                        style="@style/ButtonsChooseStyle"-->
+                    <!--                        android:text="6" />-->
                     <Button
                         android:id="@+id/maskingButton"
                         style="@style/ButtonsChooseStyle"
                         android:text="@string/_7" />
+
                     <Button
                         android:id="@+id/cubeButton"
                         style="@style/ButtonsChooseStyle"

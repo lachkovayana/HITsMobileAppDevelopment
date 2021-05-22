@@ -5,9 +5,9 @@
     style="@style/LayoutsMainStyle">
 
     <LinearLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
         android:id="@+id/editScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout style="@style/LayoutsStyle">
@@ -53,20 +53,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-            <EditText
-                android:id="@+id/amountEditText"
-                style="@style/EditTextStyle"
-                android:hint="@string/eff" />
 
-            <EditText
-                android:id="@+id/radiusEditText"
-                style="@style/EditTextStyle"
-                android:hint="@string/rad" />
+                <EditText
+                    android:id="@+id/amountEditText"
+                    style="@style/EditTextStyle"
+                    android:hint="@string/eff" />
 
-            <EditText
-                android:id="@+id/thresholdEditText"
-                style="@style/EditTextStyle"
-                android:hint="@string/por" />
+                <EditText
+                    android:id="@+id/radiusEditText"
+                    style="@style/EditTextStyle"
+                    android:hint="@string/rad" />
+
+                <EditText
+                    android:id="@+id/thresholdEditText"
+                    style="@style/EditTextStyle"
+                    android:hint="@string/por" />
             </LinearLayout>
 
         </LinearLayout>

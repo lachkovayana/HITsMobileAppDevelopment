@@ -16,6 +16,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.photoeditor.databinding.ActivityChooseBinding
+import com.example.photoeditor.databinding.ActivityMainBinding
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,28 +25,29 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        private const val REQUEST_PERMISSIONS = 123
+        private const val REQUEST_PERMISSIONS = 1
         private val PERMISSIONS = arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
         )
         private const val PERMISSIONS_COUNT = 3
-        private const val REQUEST_PICK_IMAGE = 1234
-        private const val REQUEST_IMAGE_CAPTURE = 12345
+        private const val REQUEST_PICK_IMAGE = 2
+        private const val REQUEST_IMAGE_CAPTURE = 3
     }
 
+    private lateinit var binding: ActivityMainBinding
     private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         init()
     }
 
+
     private fun init() {
-        val takePhotoButton = findViewById<Button>(R.id.takePhotoButton)
-        val selectImageById = findViewById<Button>(R.id.selectImageButton)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val builder = VmPolicy.Builder()
@@ -52,19 +55,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (!this@MainActivity.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
-            takePhotoButton.visibility = View.GONE
+            binding.takePhotoButton.visibility = View.GONE
         }
 
-        selectImageById.setOnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "image/*"
-            val pickIntent = Intent(Intent.ACTION_PICK)
-            pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-            val chooserIntent = Intent.createChooser(intent, this.getString(R.string.selectImage))
-            startActivityForResult(chooserIntent, REQUEST_PICK_IMAGE)
+        binding.selectImageButton.setOnClickListener {
+            val photoPickerIntent = Intent(Intent.ACTION_PICK)
+            photoPickerIntent.type = "image/*"
+            startActivityForResult(photoPickerIntent, REQUEST_PICK_IMAGE)
         }
 
-        takePhotoButton.setOnClickListener {
+        binding.takePhotoButton.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             try {
                 //create a file for the photo that was just taken
@@ -115,8 +115,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         val editIntent = Intent(this@MainActivity, ChooseActivity::class.java)
-        val imageToTransfer = imageUri
-        editIntent.putExtra(this.getString(R.string.imageUri), imageToTransfer.toString())
+        editIntent.putExtra(this.getString(R.string.imageUri), imageUri.toString())
         startActivity(editIntent)
     }
 

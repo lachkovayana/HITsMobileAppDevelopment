@@ -13,139 +13,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="031676b9-b22e-41bb-ac7b-c2291e71e29b" name="Default Changelist" comment="Последняя ерсия с ошибками">
-      <change beforePath="$PROJECT_DIR$/.idea/HITsMobileAppDevelopment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/HITsMobileAppDevelopment.iml" afterDir="false" />
+    <list default="true" id="031676b9-b22e-41bb-ac7b-c2291e71e29b" name="Default Changelist" comment="Исправлено маскирование (binding)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/androidTest/java/com/example/photoeditor/ExampleInstrumentedTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/java/com/example/photoeditor/EditActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/java/com/example/photoeditor/MainActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/navigation/nav_graph.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/values-night/themes.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/values/colors.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/main/res/values/themes.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/app/src/test/java/com/example/photoeditor/ExampleUnitTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/local.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AndroidStudioProjects — копия/PhotoEditor/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/.idea/runConfigurations.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/.idea/runConfigurations.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_activity_activity_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_activity_activity_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_annotation_annotation_1_1_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_annotation_annotation_1_1_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_annotation_annotation_experimental_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_annotation_annotation_experimental_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_appcompat_appcompat_1_2_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_appcompat_appcompat_1_2_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_appcompat_appcompat_resources_1_2_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_appcompat_appcompat_resources_1_2_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_arch_core_core_common_2_1_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_arch_core_core_common_2_1_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_cardview_cardview_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_cardview_cardview_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_collection_collection_1_1_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_collection_collection_1_1_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_2_0_4_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_2_0_4_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_solver_2_0_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_solver_2_0_4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_coordinatorlayout_coordinatorlayout_1_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_coordinatorlayout_coordinatorlayout_1_1_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_core_core_1_3_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_core_core_1_3_2_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_core_core_ktx_1_3_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_core_core_ktx_1_3_2_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_cursoradapter_cursoradapter_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_cursoradapter_cursoradapter_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_customview_customview_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_customview_customview_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_documentfile_documentfile_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_documentfile_documentfile_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_drawerlayout_drawerlayout_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_drawerlayout_drawerlayout_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_dynamicanimation_dynamicanimation_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_dynamicanimation_dynamicanimation_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_fragment_fragment_1_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_fragment_fragment_1_1_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_interpolator_interpolator_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_interpolator_interpolator_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_utils_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_utils_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_common_2_1_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_common_2_1_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_2_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_2_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_2_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_2_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_runtime_2_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_runtime_2_1_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_2_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_2_1_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_loader_loader_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_loader_loader_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_print_print_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_print_print_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_recyclerview_recyclerview_1_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_recyclerview_recyclerview_1_1_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_savedstate_savedstate_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_savedstate_savedstate_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_test_core_1_3_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_test_core_1_3_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_test_espresso_espresso_core_3_3_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_test_espresso_espresso_core_3_3_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_test_espresso_espresso_idling_resource_3_3_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_test_espresso_espresso_idling_resource_3_3_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_test_ext_junit_1_1_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_test_ext_junit_1_1_2_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_test_monitor_1_3_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_test_monitor_1_3_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_test_runner_1_3_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_test_runner_1_3_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_transition_transition_1_2_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_transition_transition_1_2_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_vectordrawable_vectordrawable_1_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_vectordrawable_vectordrawable_1_1_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_vectordrawable_vectordrawable_animated_1_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_vectordrawable_vectordrawable_animated_1_1_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_versionedparcelable_versionedparcelable_1_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_versionedparcelable_versionedparcelable_1_1_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_viewpager2_viewpager2_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_viewpager2_viewpager2_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_viewpager_viewpager_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__androidx_viewpager_viewpager_1_0_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__com_google_android_material_material_1_3_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__com_google_android_material_material_1_3_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__com_google_code_findbugs_jsr305_2_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__com_google_code_findbugs_jsr305_2_0_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__com_squareup_javawriter_2_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__com_squareup_javawriter_2_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__javax_inject_javax_inject_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__javax_inject_javax_inject_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__junit_junit_4_12.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__junit_junit_4_12.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__junit_junit_4_13_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__junit_junit_4_13_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__org_hamcrest_hamcrest_integration_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__org_hamcrest_hamcrest_integration_1_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__org_hamcrest_hamcrest_library_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__org_hamcrest_hamcrest_library_1_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__org_jetbrains_annotations_13_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__org_jetbrains_annotations_13_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_1_4_32.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_1_4_32.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_common_1_4_32.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_common_1_4_32.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/.idea/runConfigurations.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/.idea/runConfigurations.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/gradlew.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/proguard-rules.pro" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/proguard-rules.pro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/androidTest/java/com/example/photoeditor/ExampleInstrumentedTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/androidTest/java/com/example/photoeditor/ExampleInstrumentedTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/ChooseActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/ChooseActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/Cube.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/Cube.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/CubeActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/CubeActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/FiltersActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/FiltersActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/RotateActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/ScalingActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/java/com/example/photoeditor/UnsharpMaskingActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values-night/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values-night/styles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values-night/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values/attrs_cube.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values/attrs_cube.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values/styles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/app/src/test/java/com/example/photoeditor/ExampleUnitTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/app/src/test/java/com/example/photoeditor/ExampleUnitTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhotoEditorC/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/PhotoEditorC/gradlew.bat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +70,21 @@
       <option name="project" value="LOCAL" />
       <updated>1621541008580</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Исправлено маскирование">
+      <created>1621606695576</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1621606695576</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Исправлено маскирование (binding)">
+      <created>1621609750455</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1621609750455</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -261,7 +144,9 @@
     <MESSAGE value="20.05" />
     <MESSAGE value="Исправлена ошибка с открыванием камеры&#10;Доделан куб" />
     <MESSAGE value="Исправлены масштабирование и фильтры" />
-    <option name="LAST_COMMIT_MESSAGE" value="Исправлены масштабирование и фильтры" />
+    <MESSAGE value="Исправлено маскирование" />
+    <MESSAGE value="Исправлено маскирование (binding)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Исправлено маскирование (binding)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="280" y="7" key="#Project_Structure" timestamp="1621602712468">
@@ -292,10 +177,10 @@
       <screen x="63" y="0" width="1473" height="864" />
     </state>
     <state x="309" y="77" key="SettingsEditor/63.0.1473.864@63.0.1473.864" timestamp="1621605511082" />
-    <state x="392" y="165" key="Vcs.Push.Dialog.v2" timestamp="1621605625474">
+    <state x="392" y="165" key="Vcs.Push.Dialog.v2" timestamp="1621609754066">
       <screen x="63" y="0" width="1473" height="864" />
     </state>
-    <state x="392" y="165" key="Vcs.Push.Dialog.v2/63.0.1473.864@63.0.1473.864" timestamp="1621605625474" />
+    <state x="392" y="165" key="Vcs.Push.Dialog.v2/63.0.1473.864@63.0.1473.864" timestamp="1621609754066" />
     <state x="618" y="346" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1621604443691">
       <screen x="63" y="0" width="1473" height="864" />
     </state>

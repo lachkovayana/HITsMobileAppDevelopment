@@ -19,6 +19,7 @@ class FiltersActivity : AppCompatActivity() {
     private lateinit var bitmapBefore: Bitmap
     private lateinit var bitmap: Bitmap
     private lateinit var binding: ActivityFiltersBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFiltersBinding.inflate(layoutInflater)

@@ -10,11 +10,20 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">5dp</item>
     </style>
+
     <style name="ButtonsChooseStyle">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_margin">5dp</item>
         <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="ButtonsBackStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:tint">@color/black</item>
+        <item name="android:layout_weight">6</item>
     </style>
 
     <style name="LayoutsStyle">
@@ -26,11 +35,13 @@
         <item name="android:paddingLeft">0dp</item>
         <item name="android:paddingRight">0dp</item>
     </style>
+
     <style name="LayoutsMainStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="EditTextStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -38,17 +49,20 @@
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginBottom">40dp</item>
     </style>
+
     <style name="ImageReturnButtonStyle">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">0.2</item>
         <item name="android:backgroundTint">@color/white</item>
     </style>
+
     <style name="ImageButtonStyle">
         <item name="android:layout_width">80dp</item>
         <item name="android:layout_height">80dp</item>
         <item name="android:layout_margin">5dp</item>
     </style>
+
     <style name="TextViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>

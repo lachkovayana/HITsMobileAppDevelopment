@@ -38,7 +38,7 @@ class CubeActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                binding.cubeView.rotateZ3D(Math.toRadians(pr-oldPr).toFloat())
+                binding.cubeView.rotateZ3D(Math.toRadians(pr - oldPr).toFloat())
             }
         })
 

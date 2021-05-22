@@ -1,4 +1,3 @@
-
 package com.example.photoeditor
 
 import android.content.Intent
@@ -9,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.widget.*
+import com.example.photoeditor.databinding.ActivityChooseBinding
+import com.example.photoeditor.databinding.ActivityScalingBinding
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -20,65 +21,61 @@ class ScalingActivity : AppCompatActivity() {
     private lateinit var bitmapBefore: Bitmap
     private lateinit var bitmap: Bitmap
     private lateinit var imageView: ImageView
+    private lateinit var binding: ActivityScalingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_scaling)
+        binding = ActivityScalingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         init()
     }
 
     private fun init() {
-        val changeButton = findViewById<Button>(R.id.changeButton)
-        val returnBackButton = findViewById<ImageButton>(R.id.returnBackButton)
-        val backButton = findViewById<Button>(R.id.backButton)
-        val applyButton = findViewById<Button>(R.id.applyButton)
-        val scalingFactorEditText = findViewById<EditText>(R.id.scalingFactorEditText)
         val maxSize = 20000000
 
         //получение и установка изображения из ChooseActivity
         val uriStr = intent.getStringExtra("imgUri")
         val uri = Uri.parse(uriStr)
-        imageView = findViewById(R.id.imageViewEdit)
-        imageView.setImageURI(uri)
-        val drawable = imageView.drawable as BitmapDrawable
+        binding.imageViewEdit.setImageURI(uri)
+        val drawable = binding.imageViewEdit.drawable as BitmapDrawable
         bitmap = drawable.bitmap
         bitmapBefore = bitmap
         finalBitmap = bitmap
 
         // кнопка запуска алгоритма
-        changeButton.setOnClickListener {
-            val scalingFactor = scalingFactorEditText.text.toString().toDoubleOrNull()
+        binding.changeButton.setOnClickListener {
+            val scalingFactor = binding.scalingFactorEditText.text.toString().toDoubleOrNull()
             println(scalingFactor)
             when {
-                scalingFactor == null || (bitmap.width*scalingFactor.toInt()*bitmap.height*scalingFactor.toInt() > maxSize) -> {
+                scalingFactor == null || (bitmap.width * scalingFactor.toInt() * bitmap.height * scalingFactor.toInt() > maxSize) -> {
                     Toast.makeText(this, "Введите корректные данные", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    imageScaling (scalingFactor)
+                    imageScaling(scalingFactor)
 
-                    if (finalBitmap.width != bitmapBefore.width && finalBitmap.height != bitmapBefore.height)
-                    {
-                        Toast.makeText(this, "Алгоритм сработал корректно", Toast.LENGTH_SHORT).show()
+                    if (finalBitmap.width != bitmapBefore.width && finalBitmap.height != bitmapBefore.height) {
+                        Toast.makeText(this, "Алгоритм сработал корректно", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }
         }
 
         // кнопка отмены изменений
-        returnBackButton.setOnClickListener {
+        binding.returnBackButton.setOnClickListener {
             imageView.setImageBitmap(bitmapBefore)
             finalBitmap = bitmapBefore
         }
 
         // кнопка возвращения без сохранения
-        backButton.setOnClickListener {
+        binding.backButton.setOnClickListener {
             val editIntent = Intent(this, ChooseActivity::class.java)
             editIntent.putExtra("imgUri", uri.toString())
             startActivity(editIntent)
         }
 
         // сохранения и перехода на другую страницу
-        applyButton.setOnClickListener {
+        binding.applyButton.setOnClickListener {
             val outFile = createImageFile()
             try {
                 FileOutputStream(outFile).use { out ->
@@ -97,8 +94,8 @@ class ScalingActivity : AppCompatActivity() {
     private fun imageScaling(scalingFactor: Double) {
         val width = bitmap.width
         val height = bitmap.height
-        val newWidth = (width*scalingFactor).toInt()
-        val newHeight = (height*scalingFactor).toInt()
+        val newWidth = (width * scalingFactor).toInt()
+        val newHeight = (height * scalingFactor).toInt()
 
         val firstPixels = IntArray(width * height)
         val resultPixels = IntArray(newWidth * newHeight)
@@ -114,7 +111,14 @@ class ScalingActivity : AppCompatActivity() {
         finalBitmap = imageMask
     }
 
-    private fun changeSize(first: IntArray, result: IntArray, width: Int, newWidth: Int, newHeight: Int, scalingFactor: Double) {
+    private fun changeSize(
+        first: IntArray,
+        result: IntArray,
+        width: Int,
+        newWidth: Int,
+        newHeight: Int,
+        scalingFactor: Double
+    ) {
         var numberStringFirst: Int
         var numberStringHelp = 0
         var indexPixel: Int
@@ -146,9 +150,9 @@ class ScalingActivity : AppCompatActivity() {
                     }
                 }
 
-                var r :Int
-                var g :Int
-                var b :Int
+                var r: Int
+                var g: Int
+                var b: Int
 
                 when {
                     i % newWidth == 0 -> {
@@ -164,9 +168,12 @@ class ScalingActivity : AppCompatActivity() {
                                 b = (helpPixels[i - newWidth + 1] and 0x000000FF)
                             }
                             else -> {
-                                r = ((helpPixels[i + newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth + 1] and 0x00FF0000 shr 16)) / 2
-                                g = ((helpPixels[i + newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth + 1] and 0x0000FF00 shr 8)) / 2
-                                b = ((helpPixels[i + newWidth + 1] and 0x000000FF) + (helpPixels[i - newWidth + 1] and 0x000000FF)) / 2
+                                r =
+                                    ((helpPixels[i + newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth + 1] and 0x00FF0000 shr 16)) / 2
+                                g =
+                                    ((helpPixels[i + newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth + 1] and 0x0000FF00 shr 8)) / 2
+                                b =
+                                    ((helpPixels[i + newWidth + 1] and 0x000000FF) + (helpPixels[i - newWidth + 1] and 0x000000FF)) / 2
                             }
                         }
                     }
@@ -183,36 +190,47 @@ class ScalingActivity : AppCompatActivity() {
                                 b = (helpPixels[i - newWidth - 1] and 0x000000FF)
                             }
                             else -> {
-                                r = ((helpPixels[i + newWidth - 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth - 1] and 0x00FF0000 shr 16)) / 2
-                                g = ((helpPixels[i + newWidth - 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth - 1] and 0x0000FF00 shr 8)) / 2
-                                b = ((helpPixels[i + newWidth - 1] and 0x000000FF) + (helpPixels[i - newWidth - 1] and 0x000000FF)) / 2
+                                r =
+                                    ((helpPixels[i + newWidth - 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth - 1] and 0x00FF0000 shr 16)) / 2
+                                g =
+                                    ((helpPixels[i + newWidth - 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth - 1] and 0x0000FF00 shr 8)) / 2
+                                b =
+                                    ((helpPixels[i + newWidth - 1] and 0x000000FF) + (helpPixels[i - newWidth - 1] and 0x000000FF)) / 2
                             }
                         }
                     }
                     else -> {
                         when (helpNumber) {
                             0 -> {
-                                r = ((helpPixels[i + newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i + newWidth - 1] and 0x00FF0000 shr 16)) / 2
-                                g = ((helpPixels[i + newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i + newWidth - 1] and 0x0000FF00 shr 8)) / 2
-                                b = ((helpPixels[i + newWidth + 1] and 0x000000FF) + (helpPixels[i + newWidth - 1] and 0x000000FF)) / 2
+                                r =
+                                    ((helpPixels[i + newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i + newWidth - 1] and 0x00FF0000 shr 16)) / 2
+                                g =
+                                    ((helpPixels[i + newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i + newWidth - 1] and 0x0000FF00 shr 8)) / 2
+                                b =
+                                    ((helpPixels[i + newWidth + 1] and 0x000000FF) + (helpPixels[i + newWidth - 1] and 0x000000FF)) / 2
                             }
                             2 -> {
-                                r = ((helpPixels[i - newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth - 1] and 0x00FF0000 shr 16)) / 2
-                                g = ((helpPixels[i - newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth - 1] and 0x0000FF00 shr 8)) / 2
-                                b = ((helpPixels[i - newWidth + 1] and 0x000000FF) + (helpPixels[i - newWidth - 1] and 0x000000FF)) / 2
+                                r =
+                                    ((helpPixels[i - newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth - 1] and 0x00FF0000 shr 16)) / 2
+                                g =
+                                    ((helpPixels[i - newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth - 1] and 0x0000FF00 shr 8)) / 2
+                                b =
+                                    ((helpPixels[i - newWidth + 1] and 0x000000FF) + (helpPixels[i - newWidth - 1] and 0x000000FF)) / 2
                             }
                             else -> {
-                                r = ((helpPixels[i + newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i + newWidth - 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth - 1] and 0x00FF0000 shr 16)) / 4
-                                g = ((helpPixels[i + newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i + newWidth - 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth - 1] and 0x0000FF00 shr 8)) / 4
-                                b = ((helpPixels[i + newWidth + 1] and 0x000000FF) + (helpPixels[i + newWidth - 1] and 0x000000FF) + (helpPixels[i - newWidth + 1] and 0x000000FF) + (helpPixels[i - newWidth - 1] and 0x000000FF)) / 4
+                                r =
+                                    ((helpPixels[i + newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i + newWidth - 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth + 1] and 0x00FF0000 shr 16) + (helpPixels[i - newWidth - 1] and 0x00FF0000 shr 16)) / 4
+                                g =
+                                    ((helpPixels[i + newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i + newWidth - 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth + 1] and 0x0000FF00 shr 8) + (helpPixels[i - newWidth - 1] and 0x0000FF00 shr 8)) / 4
+                                b =
+                                    ((helpPixels[i + newWidth + 1] and 0x000000FF) + (helpPixels[i + newWidth - 1] and 0x000000FF) + (helpPixels[i - newWidth + 1] and 0x000000FF) + (helpPixels[i - newWidth - 1] and 0x000000FF)) / 4
                             }
                         }
                     }
                 }
                 result[i] = -0x1000000 or (r shl 16) or (g shl 8) or b
             }
-        }
-        else {
+        } else {
             for (i in helpPixels.indices) {
                 val r = (helpPixels[i] and 0x00FF0000 shr 16)
                 val g = (helpPixels[i] and 0x0000FF00 shr 8)
